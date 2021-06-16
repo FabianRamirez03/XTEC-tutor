@@ -1,0 +1,174 @@
+@import url(https://fonts.googleapis.com/css?family=Exo:100,200,400);
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
+
+body{
+  margin: 0;
+  padding: 0;
+  background: #fff;
+
+  color: #fff;
+  font-family: Arial;
+  font-size: 12px;
+}
+
+.body{
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -40px;
+  bottom: -40px;
+  width: auto;
+  height: auto;
+  background-image: url(https://b122fe8e0b8ea4d16cb3-8420fc0ce05d0ddef095398ad3e98f10.ssl.cf5.rackcdn.com/201117_Instituto_Tecnologico_Costa_Rica_TEC_ITCR_Full.jpg);
+  background-size: cover;
+  -webkit-filter: blur(5px);
+  z-index: 0;
+}
+
+.grad{
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -40px;
+  bottom: -40px;
+  width: auto;
+  height: auto;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
+  z-index: 1;
+  opacity: 0.7;
+}
+
+.header{
+  position: absolute;
+  top: calc(50% - 20px);
+  left: calc(42% - 255px);
+  z-index: 2;
+}
+
+.header div{
+  float: left;
+  color: #fff;
+  font-family: 'Exo', sans-serif;
+  font-size: 85px;
+  font-weight: 200;
+}
+
+.header div span{
+  color: #5379fa !important;
+}
+
+.login{
+  position: absolute;
+  top: calc(52% - 75px);
+  left: calc(55% - 50px);
+  height: 250px;
+  width: 400px;
+  padding: 2px;
+  z-index: 2;
+}
+
+.login input[type=text]{
+  width: 300px;
+  height: 50px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 2px;
+  color: #fff;
+  font-family: 'Exo', sans-serif;
+  font-size: 25px;
+  font-weight: 400;
+  padding: 2px;
+}
+
+.login input[type=password]{
+  width: 297px;
+  height: 50px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.6);
+  border-radius: 2px;
+  color: #fff;
+  font-family: 'Exo', sans-serif;
+  font-size: 25px;
+  font-weight: 400;
+  padding: 4px;
+  margin-top: 10px;
+}
+
+.login input[type=button]{
+  width: 305px;
+  height: 35px;
+  background: #5379fa;
+  border: 1px solid #5379fa;
+  cursor: pointer;
+  color: #fff;
+  font-family: 'Exo', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  margin-top: 30px;
+  margin-bottom: 5px;
+  border-radius: 15px;
+}
+
+.login input[type=button]:hover{
+  width: 305px;
+  height: 35px;
+  background: #5379fa;
+  border: 1px solid #5379fa;
+  cursor: pointer;
+  color: #fff;
+  font-family: 'Exo', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  margin-top: 30px;
+  margin-bottom: 5px;
+  border-radius: 15px;
+}
+
+.login input[type=button]:active{
+  opacity: 0.7;
+  background: #5379fa;
+}
+
+.login input[type=text]:focus{
+  outline: none;
+  border: 1px solid rgba(255,255,255,0.9);
+}
+
+.login input[type=password]:focus{
+  outline: none;
+  border: 1px solid rgba(255,255,255,0.9);
+}
+
+.login input[type=button]:focus{
+  outline: none;
+}
+
+::-webkit-input-placeholder{
+  color: rgba(255,255,255,0.6);
+}
+
+::-moz-input-placeholder{
+  color: rgba(255,255,255,0.6);
+}
+.login2 {
+
+  &__signup {
+    font-size: 1.05rem;
+    color: #ABA8AE;
+    font-family: 'Exo', sans-serif;
+    font-weight: 300;
+
+    a {
+      color: #fff;
+      cursor: pointer;
+    }
+  }
+
+}
+
+.submit2 {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  background: #d4af7a;
+  text-transform: uppercase;
+}
