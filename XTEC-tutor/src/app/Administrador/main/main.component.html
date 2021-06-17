@@ -2,15 +2,37 @@
 
 <h1>Catálogos de información</h1>
 
-<div class='form-'>
-  <label for="SelectCarrera">Carrera</label>
-  <select class="form-group" id="SelectCarrera">
-    <option value="Computadores"> Computadores  </option>
-  </select>
+<form class="select-custom">
+  <label for="SelectCarrera" class="form-font">Carrera</label>
+  <div class="input-group mb-3">
+    <select class="form-control" id="SelectCarrera">
+      <option selected="selected">Seleccione una carrera</option>
+      <option>Ingeniería en Computadores</option>
+      <option>Ingeniería en Electrónica</option>
+      <option>Ingeniería en Computación</option>
+      <option>Ingeniería en Mecactrónica</option>
+      <option>Administración de empresas</option>
+    </select><div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="button">Nueva Carrera</button>
+    </div>
+  </div>
 
-</div>
 
-<input type="button" routerLink="/admin" value="Iniciar sesión">
 
+  <label for="SelectCurso" class="form-font">Curso</label>
+  <div class="input-group mb-1">
+    <select class="form-control" id="SelectCurso">
+      <option selected="selected">Seleccione una curso</option>
+      <option>Bases de datos</option>
+      <option>Cálculo superior</option>
+      <option>Introducción a la programación</option>
+      <option>Taller de programación</option>
+      <option>Matemática Discreta</option>
+    </select><div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button">Nueva Curso</button>
+  </div>
+  </div>
+
+</form>
 
 <app-footer></app-footer>

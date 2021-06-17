@@ -5,6 +5,7 @@ import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminNavBarComponent } from './Components/admin-nav-bar/admin-nav-bar.component';
 import { FooterComponent } from './Components/footer/footer.component';
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -14,10 +15,11 @@ import { FooterComponent } from './Components/footer/footer.component';
     AdminNavBarComponent,
     FooterComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
