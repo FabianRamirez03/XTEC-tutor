@@ -36,8 +36,22 @@ Begin
 	Else Begin
 		set @tipoUsuario = 0;
 	End;
+	return @tipoUsuario;
 End;
 Go
+
+CREATE OR ALTER PROCEDURE crearEntradaConocimiento @titulo varchar (100), @cuerpoArticulo varchar(max),
+@descripcion varchar (max), @visible bit, @nombreArchivo varchar (100), @extension varchar (100), @archivo varchar(max),
+@carrera varchar (100), @curso varchar(100), @tema varchar(100)
+AS
+BEGIN
+	Declare @idCatalogo int = (select idCatalogo  from Catalogos where Carrera = @carrera and Curso = @curso and tema = @tema);
+	INSERT INTO EntradaConocimiento (titulo,cuerpoArticulo,descripcion,visible,nombreArchivo,extension,archivo,idCatalogo)
+	values (@titulo,@cuerpoArticulo, @descripcion, @visible, @nombreArchivo, @extension,@archivo,@idCatalogo);
+END;
+GO
+
+
 
 --**************************ALUMNO**************************
 
@@ -50,6 +64,17 @@ Begin
 INSERT INTO Administrador values (@usuario, @contrasena);
 End;
 Go
+
+
+--Crear Catalogo
+CREATE OR ALTER PROCEDURE crearCatalogo @usuarioAdmin varchar(50), @carrera varchar(100), @curso varchar(100),
+@tema varchar(100)
+AS
+Begin
+INSERT INTO Catalogos (usuarioAdmin, carrera, curso, tema) values (@usuarioAdmin, @carrera, @curso, @tema);
+End;
+Go
+
 
 
 --**************************ADMINISTRADOR**************************

@@ -26,8 +26,11 @@ Create table EntradaConocimiento (
 	vistas int default 0,
 	puntuacion int default 0,
 	descripcion varchar(max),
-	nombreCarrera varchar (100) not null,
 	visible bit not null,
+	idCatalogo int not null,
+	nombreArchivo varchar (100),
+	extension varchar (100),
+	archivo varchar (max),
 	primary key (idEntrada)
 );
 
@@ -59,23 +62,13 @@ Create table Administrador (
 	primary key (usuario)
 );
 
-Create table Carrera (
-	nombreCarrera varchar (100),
+Create table Catalogos (
+	idCatalogo int identity (1,1),
 	usuarioAdmin varchar (50),
-	primary key (nombreCarrera)
-);
-
-Create table Curso (
-	nombreCurso varchar (100),
-	nombreCarrera varchar (100),
-	primary key (nombreCurso, nombreCarrera)
-);
-
-Create table Tema (
-	nombreTema varchar (100),
-	nombreCurso varchar (100),
-	nombreCarrera varchar (100),
-	primary key (nombreTema, nombreCurso,nombreCarrera)
+	carrera varchar (100),
+	curso varchar (100),
+	tema varchar (100),
+	primary key (idCatalogo)
 );
 
 --Modificaciones de las tablas
@@ -93,8 +86,8 @@ Add constraint FK_idEntradaAlumno
 foreign key (idEntrada) references EntradaConocimiento (idEntrada);
 
 Alter table EntradaConocimiento
-Add constraint FK_nombreCarreraEntrada
-foreign key (nombreCarrera) references Carrera (nombreCarrera);
+Add constraint FK_idCatalogo
+foreign key (idCatalogo) references Catalogos (idCatalogo);
 
 Alter table ReviewsAlumnos
 Add constraint FK_carnetReviews
@@ -112,14 +105,6 @@ Alter table Comentarios
 Add constraint FK_idEntradaComentario
 foreign key (idEntrada) references EntradaConocimiento (idEntrada);
 
-Alter table Carrera
-Add constraint FK_usuarioCarrera
+Alter table Catalogos
+Add constraint FK_usuarioAdmin
 foreign key (usuarioAdmin) references Administrador (usuario);
-
-Alter table Curso
-Add constraint FK_nombreCarrera
-foreign key (nombreCarrera) references Carrera (nombreCarrera);
-
-Alter table Tema
-Add constraint FK_nombreCurso
-foreign key (nombreCurso,nombreCarrera) references Curso (nombreCurso,nombreCarrera);
