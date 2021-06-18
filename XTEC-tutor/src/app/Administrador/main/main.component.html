@@ -13,7 +13,7 @@
       <option>Ingeniería en Mecactrónica</option>
       <option>Administración de empresas</option>
     </select><div class="input-group-append">
-      <button class="btn btn-outline-secondary" type="button">Nueva Carrera</button>
+      <button class="btn btn-outline-secondary" type="button" mat-raised-button id="nuevaCarrera-button" (click)="openCentrado(carrera)">Nueva Carrera</button>
     </div>
   </div>
 
@@ -28,19 +28,110 @@
       <option>Introducción a la programación</option>
       <option>Taller de programación</option>
       <option>Matemática Discreta</option>
-    </select><div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="button">Nueva Curso</button>
-  </div>
+    </select>
+    <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button" (click)="openCentrado(curso)">Nueva Curso</button>
+    </div>
   </div>
 
-  <label for="ListaTemas" class="form-font">Temas</label>
-  <button class="btn btn-outline-secondary" type="button" style="margin-left: 91%">Nueva tema</button>
-  <ul class="list-group list-group-flush" id="ListaTemas">
-    <li class="list-group-item">Integrales</li>
-    <li class="list-group-item">Derivadas</li>
-    <li class="list-group-item">Límites</li>
-  </ul>
+  <label for="ListaTemas" class="form-font" style="margin-top: 15px">Temas</label>
+  <div class="input-group mb-1">
+    <button class="btn btn-outline-secondary" type="button" style="margin-left: 91%" (click)="openCentrado(tema)">Nueva tema</button>
+    <ul class="list-group list-group-flush list-custom" id="ListaTemas">
+      <li class="list-group-item">Integrales</li>
+      <li class="list-group-item">Derivadas</li>
+      <li class="list-group-item">Límites</li>
+    </ul>
+  </div>
 
 </form>
+
+
+<ng-template #carrera let-modal>
+  <div class="modal-header">
+    <h1 class="modal-title">Nueva carrera</h1>
+    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <input type="text" class="form-control" id="nuevaCarrera" aria-describedby="emailHelp" placeholder="Ingresa nombre de la nueva carrera">
+        <small id="carreraHelp" class="form-text text-muted">El nombre de la carrera debe ser diferente a las existentes.</small>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-success" (click)="modal.close()">Guardar cambios</button>
+  </div>
+</ng-template>
+
+<ng-template #curso let-modal>
+  <div class="modal-header">
+    <h1 class="modal-title">Nueva curso</h1>
+    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <select class="form-control" id="SelectCarreraModalCurso">
+        <option selected="selected">Seleccione una carrera</option>
+        <option>Ingeniería en Computadores</option>
+        <option>Ingeniería en Electrónica</option>
+        <option>Ingeniería en Computación</option>
+        <option>Ingeniería en Mecactrónica</option>
+        <option>Administración de empresas</option>
+      </select>
+
+      <div class="form-group" style="margin-top: 5%">
+        <input type="text" class="form-control" id="nuevaCurso" aria-describedby="emailHelp" placeholder="Ingresa nombre del nuevo curso">
+        <small id="carreraHelpCurso" class="form-text text-muted">El nombre del curso debe ser distintos al resto de la carrera.</small>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-success" (click)="modal.close()">Guardar cambios</button>
+  </div>
+</ng-template>
+
+<ng-template #tema let-modal>
+  <div class="modal-header">
+    <h1 class="modal-title">Nueva tema</h1>
+    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <select class="form-control" id="SelectCarreraModalTema">
+        <option selected="selected">Seleccione una carrera</option>
+        <option>Ingeniería en Computadores</option>
+        <option>Ingeniería en Electrónica</option>
+        <option>Ingeniería en Computación</option>
+        <option>Ingeniería en Mecactrónica</option>
+        <option>Administración de empresas</option>
+      </select>
+
+      <select class="form-control" id="SelectCursoModalTema" style="margin-top: 5%">
+        <option selected="selected">Seleccione una curso</option>
+        <option>Bases de datos</option>
+        <option>Cálculo superior</option>
+        <option>Introducción a la programación</option>
+        <option>Taller de programación</option>
+        <option>Matemática Discreta</option>
+      </select>
+
+      <div class="form-group" style="margin-top: 5%">
+        <input type="text" class="form-control" id="nuevoTema" aria-describedby="emailHelp" placeholder="Ingresa el nombre del nuevo tema">
+        <small id="temaHelp" class="form-text text-muted">El nombre del tema debe ser distinto al resto de la curso.</small>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-success" (click)="modal.close()">Guardar cambios</button>
+  </div>
+</ng-template>
 
 <app-footer></app-footer>

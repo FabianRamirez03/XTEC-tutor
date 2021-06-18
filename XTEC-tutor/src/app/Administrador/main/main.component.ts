@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-main',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modal:NgbModal) { }
 
   ngOnInit(): void {
   }
+
+  // @ts-ignore
+  openCentrado(contenido){
+    this.modal.open(contenido,{centered:true});
+  }
+
 
 }
