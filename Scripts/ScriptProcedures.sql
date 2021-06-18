@@ -40,6 +40,7 @@ Begin
 End;
 Go
 
+--Crear entrada de conocimiento
 CREATE OR ALTER PROCEDURE crearEntradaConocimiento @titulo varchar (100), @cuerpoArticulo varchar(max),
 @descripcion varchar (max), @visible bit, @nombreArchivo varchar (100), @extension varchar (100), @archivo varchar(max),
 @carrera varchar (100), @curso varchar(100), @tema varchar(100)
@@ -51,6 +52,22 @@ BEGIN
 END;
 GO
 
+--Buscar entradas de conocimiento
+CREATE OR ALTER PROCEDURE buscarEntradas (@carrera varchar (100), @curso varchar (100), @tema varchar(100),
+@tipoBusqueda bit)
+AS
+BEGIN
+	IF (@tipoBusqueda == 1)
+	Begin
+		select * from EntradaConocimiento where Carrera = @carrera and Curso = @curso and tema = @tema
+		order by puntuacion;
+	End
+	Else If (@tipoBusqueda == 0)
+	Begin
+		select * from EntradaConocimiento where Carrera = @carrera and Curso = @curso and tema = @tema
+	End
+END;
+GO
 
 
 --**************************ALUMNO**************************

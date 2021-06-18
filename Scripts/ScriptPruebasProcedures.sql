@@ -24,8 +24,8 @@ execute crearCatalogo @usuarioAdmin = 'admin', @carrera = 'Carrera de prueba 2',
 */
 
 /*
-execute crearEntradaConocimiento @titulo = 'Titulo de prueba 2', @cuerpoArticulo = 'Cuerpo de prueba 2',
-@descripcion = 'Descripcion de prueba 2', @visible = 1, @nombreArchivo = 'nombre de prueba 2',
-@extension = '.png', @archivo = 'aqui iria el archivo', @carrera = 'Carrera de prueba 2',
-@curso = 'Curso de prueba 2' , @tema = 'tema de prueba 2'
+execute crearEntradaConocimiento @titulo = 'Titulo de prueba 3', @cuerpoArticulo = 'Cuerpo de prueba 3',
+@descripcion = 'Descripcion de prueba 3', @visible = 1, @nombreArchivo = 'nombre de prueba 3',
+@extension = '.png', @archivo = 'aqui iria el archivo', @carrera = 'Carrera de prueba',
+@curso = 'Curso de prueba' , @tema = 'tema de prueba'
 */
