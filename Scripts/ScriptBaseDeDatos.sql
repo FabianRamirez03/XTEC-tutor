@@ -1,8 +1,8 @@
 --Creacion de tablas de la base de datos
 Create table Alumno (
-	carnet varchar(20),
+	carnet varchar(20) not null,
 	contrasena varchar(20) not null,
-	correro varchar (100) not null,
+	correo varchar (100) not null,
 	primerNombre varchar(20) not null,
 	apellido varchar (20) not null,
 	descripcion varchar (200),
@@ -27,6 +27,7 @@ Create table EntradaConocimiento (
 	puntuacion int default 0,
 	descripcion varchar(max),
 	nombreCarrera varchar (100) not null,
+	visible bit not null,
 	primary key (idEntrada)
 );
 
