@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminNavBarComponent } from './Components/admin-nav-bar/admin-nav-bar.component';
 import { FooterComponent } from './Components/footer/footer.component';
 import {FormsModule} from "@angular/forms";
+import { StudentNavBarComponent } from './Components/student-nav-bar/student-nav-bar.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import {FormsModule} from "@angular/forms";
     routingComponents,
     AdminNavBarComponent,
     FooterComponent,
+    StudentNavBarComponent,
   ],
     imports: [
         BrowserModule,
