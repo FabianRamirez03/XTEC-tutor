@@ -60,13 +60,19 @@ execute buscarEntradas @carrera ='computadores',@curso = 'intro y taller',@tema 
 /*
 execute comentarEntrada @carnet = '2018319178' ,@idEntrada = 5, @comentario = 'Me parecio muy buen articulo'
 execute comentarEntrada @carnet = '2018319178' ,@idEntrada = 5, @comentario = 'Siga subiendo articulos asi'
+execute comentarEntrada @carnet = '201868978' ,@idEntrada = 5, @comentario = 'no me quedo del todo claro'
 execute comentarEntrada @carnet = '2018319178' ,@idEntrada = 7, @comentario = 'Que es este articulo tan malo?'
 */
-
+select * from EntradaConocimiento
+select * from ReviewsAlumnos
+delete from ReviewsAlumnos where idEntrada = 5
+update EntradaConocimiento set puntuacion = 
 /*
-execute puntuarEntrada @carnet = '2018319178', @idEntrada = 5, @nota = 10;
-execute puntuarEntrada @carnet = '2018319178', @idEntrada = 7, @nota = 3;
+execute puntuarEntrada @carnet = '2018319178', @idEntrada = 5, @nota = 9;
+execute puntuarEntrada @carnet = '201868978', @idEntrada = 5, @nota = 6;
+execute puntuarEntrada @carnet = '2018319178', @idEntrada = 7, @nota = 2;
 */
+select * from Alumno
 /*
 execute verReviewsEntrada @idEntrada = 5
 */

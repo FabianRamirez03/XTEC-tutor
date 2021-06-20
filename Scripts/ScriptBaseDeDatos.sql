@@ -53,9 +53,11 @@ Create table Comentarios (
 Create table ReviewsAlumnos (
 	carnet varchar(20) not null,
 	idEntrada int not null,
-	nota int,
+	nota decimal(3,1),
 	primary key (carnet, idEntrada)
 );
+
+alter table ReviewsAlumnos alter column nota decimal (3,1)
 
 Create table Administrador (
 	usuario varchar(50),

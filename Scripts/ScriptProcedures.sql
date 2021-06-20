@@ -149,7 +149,7 @@ BEGIN
 END;
 GO
 
---Ver comentarios y notas de la entrada de conocimiento **unirlo a las notas de los alumnos
+--Ver comentarios y notas de la entrada de conocimiento **HAY QUE CORREGIR ESTE METODO ******************************************************
 CREATE OR ALTER PROCEDURE verReviewsEntrada ( @idEntrada int)
 AS
 BEGIN
@@ -172,6 +172,19 @@ begin
 	update EntradaConocimiento set puntuacion = 0.0 where idEntrada = @idEntrada;
 end;
 go
+
+--Trigger para obtener las nota promedio a partir de las calificaciones de los alumnos en la entrada de conocimiento
+CREATE OR ALTER TRIGGER tr_sumarNotaEntrada on ReviewsAlumnos
+after insert, update
+as
+begin
+	declare @idEntrada int = (select idEntrada from inserted);
+	declare @cantidadVotos int = (select count(*) from ReviewsAlumnos where idEntrada = @idEntrada);
+	declare @notaTotal decimal(3,1) = (select sum (nota) from ReviewsAlumnos where idEntrada = @idEntrada);
+	update EntradaConocimiento set puntuacion = @notaTotal/@cantidadVotos where idEntrada = @idEntrada;
+end;
+go
+
 --****TRIGGERS****
 --**************************ALUMNO**************************
 
