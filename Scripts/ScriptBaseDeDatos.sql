@@ -24,13 +24,14 @@ Create table EntradaConocimiento (
 	titulo varchar (100) not null,
 	cuerpoArticulo varchar(max),
 	vistas int default 0,
-	puntuacion int default 0,
+	puntuacion decimal(3,1),
 	descripcion varchar(max),
 	visible bit not null,
 	idCatalogo int not null,
 	nombreArchivo varchar (100),
 	extension varchar (100),
 	archivo varchar (max),
+	fechaCreacion datetime default getDate(),
 	primary key (idEntrada)
 );
 

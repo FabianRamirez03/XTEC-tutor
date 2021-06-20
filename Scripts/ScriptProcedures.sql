@@ -19,7 +19,6 @@ descripcion = @descripcion, telefono = @telefono, fotografia = @fotografia where
 End;
 Go
 
-
 --Validar inicio de sesion
 CREATE OR ALTER PROCEDURE iniciarSesion @usuario varchar(50), @contrasena varchar(20)
 AS
@@ -41,35 +40,139 @@ End;
 Go
 
 --Crear entrada de conocimiento
-CREATE OR ALTER PROCEDURE crearEntradaConocimiento @titulo varchar (100), @cuerpoArticulo varchar(max),
+CREATE OR ALTER PROCEDURE crearEntradaConocimiento @carnet varchar (20), @titulo varchar (100), @cuerpoArticulo varchar(max),
 @descripcion varchar (max), @visible bit, @nombreArchivo varchar (100), @extension varchar (100), @archivo varchar(max),
 @carrera varchar (100), @curso varchar(100), @tema varchar(100)
 AS
 BEGIN
 	Declare @idCatalogo int = (select idCatalogo  from Catalogos where Carrera = @carrera and Curso = @curso and tema = @tema);
-	INSERT INTO EntradaConocimiento (titulo,cuerpoArticulo,descripcion,visible,nombreArchivo,extension,archivo,idCatalogo)
-	values (@titulo,@cuerpoArticulo, @descripcion, @visible, @nombreArchivo, @extension,@archivo,@idCatalogo);
+	if exists (select * from Alumno where carnet = @carnet)
+	Begin
+		INSERT INTO EntradaConocimiento (titulo,cuerpoArticulo,descripcion,visible,nombreArchivo,extension,archivo,idCatalogo)
+		values (@titulo,@cuerpoArticulo, @descripcion, @visible, @nombreArchivo, @extension,@archivo,@idCatalogo);
+		INSERT INTO EntradasAlumno values (@carnet, scope_identity());
+	end;
+	else
+		RAISERROR ('El carnet ingresado es invalido',16,1);
 END;
 GO
+
+--Habilitar o deshabilitar la visibilidad de un curso
+CREATE OR ALTER PROCEDURE cambiarVisibilidad (@idEntrada int)
+AS
+BEGIN
+	update EntradaConocimiento set visible = visible ^ 1 where idEntrada = @idEntrada;
+END;
+GO
+
+--Ver entradas del alumno por su carnet
+CREATE OR ALTER PROCEDURE verEntradasAlumno (@carnet varchar(20))
+AS
+BEGIN
+	select ec.idEntrada, ec.titulo, ec.vistas, ec.puntuacion, ec.descripcion, ec.visible, c.carrera,c.curso,c.tema from EntradaConocimiento ec 
+	inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
+	inner join EntradasAlumno as ea on ea.idEntrada = ec.idEntrada
+	where ea.carnet = @carnet;
+END;
+GO
+
 
 --Buscar entradas de conocimiento
 CREATE OR ALTER PROCEDURE buscarEntradas (@carrera varchar (100), @curso varchar (100), @tema varchar(100),
 @tipoBusqueda bit)
 AS
 BEGIN
-	IF (@tipoBusqueda == 1)
+	--Busqueda por recientes
+	IF (@tipoBusqueda = 1)
 	Begin
-		select * from EntradaConocimiento where Carrera = @carrera and Curso = @curso and tema = @tema
-		order by puntuacion;
+		select titulo, descripcion, vistas, puntuacion, fechaCreacion, idEntrada from EntradaConocimiento as ec
+		inner join Catalogos as c on c.idCatalogo = ec.idCatalogo 
+		where c.carrera = @carrera and c.curso = @curso and c.tema = @tema and visible = 1
+		order by ec.fechaCreacion desc;
 	End
-	Else If (@tipoBusqueda == 0)
+
+	--Busqueda por relevancia
+	Else If (@tipoBusqueda = 0)
 	Begin
-		select * from EntradaConocimiento where Carrera = @carrera and Curso = @curso and tema = @tema
+		select titulo, descripcion, vistas, puntuacion, fechaCreacion, idEntrada from EntradaConocimiento as ec
+		inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
+		where c.carrera = @carrera and c.curso = @curso and c.tema = @tema and visible = 1
+		order by ec.puntuacion desc;
 	End
 END;
 GO
 
+--Ver carreras
+CREATE OR ALTER PROCEDURE verCarreras
+AS
+BEGIN
+	select carrera from Catalogos group by carrera;
+END;
+GO
 
+--Ver cursos por carrera
+CREATE OR ALTER PROCEDURE verCursos (@carrera varchar (100))
+AS
+BEGIN
+	select curso from Catalogos where carrera = @carrera and curso != '' group by curso;
+END;
+GO
+
+--Ver temas por curso
+CREATE OR ALTER PROCEDURE verTemas (@curso varchar (100))
+AS
+BEGIN
+	select tema from Catalogos where curso = @curso and tema != '' group by tema;
+END;
+GO
+
+--Comentar entrada de conocimiento
+CREATE OR ALTER PROCEDURE comentarEntrada (@carnet varchar (20), @idEntrada int, @comentario varchar(max))
+AS
+BEGIN
+	insert into Comentarios (comentario,carnetAlumno,idEntrada) values (@comentario, @carnet, @idEntrada)
+END;
+GO
+
+--Puntuar entrada de conocimiento
+CREATE OR ALTER PROCEDURE puntuarEntrada (@carnet varchar (20), @idEntrada int, @nota int)
+AS
+BEGIN
+	if not exists (select * from ReviewsAlumnos where carnet = @carnet and idEntrada = @idEntrada)
+	begin
+		insert into ReviewsAlumnos(carnet,idEntrada, nota) values (@carnet, @idEntrada, @nota);
+	end;
+	else
+	begin
+		update ReviewsAlumnos set nota = @nota where carnet = @carnet and idEntrada = @idEntrada;
+	end;
+END;
+GO
+
+--Ver comentarios y notas de la entrada de conocimiento **unirlo a las notas de los alumnos
+CREATE OR ALTER PROCEDURE verReviewsEntrada ( @idEntrada int)
+AS
+BEGIN
+	select a.primerNombre, a.apellido, c.comentario, ra.nota from EntradaConocimiento as ec
+	inner join Comentarios as c on c.idEntrada = ec.idEntrada
+	inner join ReviewsAlumnos as ra on ra.idEntrada = ec.idEntrada
+	inner join Alumno as a on c.carnetAlumno = a.carnet
+	where ec.idEntrada = @idEntrada;
+END;
+GO
+
+
+--****TRIGGERS****
+--Trigger para puntuacion inicial en 0
+CREATE OR ALTER TRIGGER tr_puntuacionPorDefecto on EntradaConocimiento
+for insert
+as
+begin
+	declare @idEntrada int = (select idEntrada from inserted);
+	update EntradaConocimiento set puntuacion = 0.0 where idEntrada = @idEntrada;
+end;
+go
+--****TRIGGERS****
 --**************************ALUMNO**************************
 
 
