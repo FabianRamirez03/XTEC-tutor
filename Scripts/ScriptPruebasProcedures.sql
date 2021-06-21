@@ -43,14 +43,18 @@ execute crearEntradaConocimiento @carnet = '2018319178', @titulo = 'articulo sin
 @descripcion = 'Descripcion de prueba', @visible = 1, @nombreArchivo = 'nombre de prueba',
 @extension = '.png', @archivo = 'aqui iria el archivo', @carrera = 'computadores',
 @curso = 'intro y taller' , @tema = ''
-*/
 
+execute crearEntradaConocimiento @carnet = '2018319178', @titulo = 'Titulo de prueba 4', @cuerpoArticulo = '',
+@descripcion = 'Descripcion de prueba 4', @visible = 1, @nombreArchivo = '',
+@extension = '', @archivo = '', @carrera = 'Carrera de prueba',
+@curso = 'Curso de prueba' , @tema = 'tema de prueba'
+
+*/
+select * from EntradaConocimiento --id 20
 /*
 execute verEntradasAlumno @carnet = '2018319178'
 */
-select * from EntradaConocimiento
-select * from EntradasAlumno
-insert into EntradasAlumno values ('201868978',5)
+execute obtenerEntrada @idEntrada = 5
 /*
 execute buscarEntradas @carrera ='Carrera de prueba',@curso = 'Curso de prueba',@tema ='tema de prueba',@tipoBusqueda = 0
 select * from entradaConocimiento
@@ -83,4 +87,4 @@ select * from EntradaConocimiento
 /*
 execute verReviewsEntrada @idEntrada = 7
 */
-
+execute obtenerEntrada @idEntrada = 19

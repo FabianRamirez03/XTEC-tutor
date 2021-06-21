@@ -57,6 +57,24 @@ BEGIN
 END;
 GO
 
+
+
+--Obtiene todos los datos de la entrada de conocimiento e indica si existe un archivo en esta
+CREATE OR ALTER PROCEDURE obtenerEntrada @idEntrada int
+AS
+BEGIN
+	IF (select archivo from EntradaConocimiento where idEntrada = @idEntrada) = ''
+	BEGIN
+		select *, 0 columnaPrueba from EntradaConocimiento where idEntrada = @idEntrada;
+	END;
+	ELSE
+	BEGIN
+		select *, 1 columnaPrueba from EntradaConocimiento where idEntrada = @idEntrada;
+	END;
+END;
+GO
+
+
 --Habilitar o deshabilitar la visibilidad de un curso
 CREATE OR ALTER PROCEDURE cambiarVisibilidad (@idEntrada int)
 AS
@@ -105,10 +123,7 @@ BEGIN
 	End
 END;
 GO
-/*
-select * from Comentarios
-execute buscarEntradas @carrera ='Carrera de prueba',@curso = 'Curso de prueba',@tema ='tema de prueba',@tipoBusqueda = 1
-*/
+
 --Ver carreras
 CREATE OR ALTER PROCEDURE verCarreras
 AS
