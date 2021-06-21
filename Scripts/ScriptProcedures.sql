@@ -85,23 +85,30 @@ BEGIN
 	--Busqueda por recientes
 	IF (@tipoBusqueda = 1)
 	Begin
-		select titulo, descripcion, vistas, puntuacion, fechaCreacion, idEntrada from EntradaConocimiento as ec
-		inner join Catalogos as c on c.idCatalogo = ec.idCatalogo 
+		select titulo, descripcion, vistas, (select count (*) from Comentarios where ec.idEntrada = idEntrada) cantidadComentarios, puntuacion,
+		fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
+		inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
 		where c.carrera = @carrera and c.curso = @curso and c.tema = @tema and visible = 1
+		group by ec.titulo,ec.descripcion,ec.vistas, idEntrada, puntuacion,fechaCreacion,ec.idEntrada
 		order by ec.fechaCreacion desc;
 	End
 
 	--Busqueda por relevancia
 	Else If (@tipoBusqueda = 0)
 	Begin
-		select titulo, descripcion, vistas, puntuacion, fechaCreacion, idEntrada from EntradaConocimiento as ec
+		select titulo, descripcion, vistas, (select count (*) from Comentarios as com where ec.idEntrada = com.idEntrada) cantidadComentarios, puntuacion,
+		fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
 		inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
 		where c.carrera = @carrera and c.curso = @curso and c.tema = @tema and visible = 1
+		group by ec.titulo,ec.descripcion,ec.vistas, idEntrada, puntuacion,fechaCreacion,ec.idEntrada
 		order by ec.puntuacion desc;
 	End
 END;
 GO
-
+/*
+select * from Comentarios
+execute buscarEntradas @carrera ='Carrera de prueba',@curso = 'Curso de prueba',@tema ='tema de prueba',@tipoBusqueda = 1
+*/
 --Ver carreras
 CREATE OR ALTER PROCEDURE verCarreras
 AS
@@ -149,18 +156,24 @@ BEGIN
 END;
 GO
 
---Ver comentarios y notas de la entrada de conocimiento **HAY QUE CORREGIR ESTE METODO ******************************************************
+--Ver comentarios y notas de la entrada de conocimiento *****SOLO SE VEN SI SE PUSO NOTA Y SE COMENTÓ**********
 CREATE OR ALTER PROCEDURE verReviewsEntrada ( @idEntrada int)
 AS
 BEGIN
-	select a.primerNombre, a.apellido, c.comentario, ra.nota from EntradaConocimiento as ec
-	inner join Comentarios as c on c.idEntrada = ec.idEntrada
-	inner join ReviewsAlumnos as ra on ra.idEntrada = ec.idEntrada
-	inner join Alumno as a on c.carnetAlumno = a.carnet
-	where ec.idEntrada = @idEntrada;
+	select a.primerNombre, a.apellido, c.comentario, ra.nota from Comentarios as c
+	inner join Alumno as a on a.carnet = c.carnetAlumno
+	inner join ReviewsAlumnos as ra on ra.carnet = a.carnet
+	where c.idEntrada = @idEntrada and ra.idEntrada = @idEntrada;
 END;
 GO
 
+--Aumenta las vistas de una entrada de conocimiento en 1
+CREATE OR ALTER PROCEDURE agregarVista ( @idEntrada int)
+AS
+BEGIN
+	UPDATE EntradaConocimiento set vistas = vistas + 1 where idEntrada = @idEntrada;
+END;
+GO
 
 --****TRIGGERS****
 --Trigger para puntuacion inicial en 0

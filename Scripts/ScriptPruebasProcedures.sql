@@ -48,9 +48,12 @@ execute crearEntradaConocimiento @carnet = '2018319178', @titulo = 'articulo sin
 /*
 execute verEntradasAlumno @carnet = '2018319178'
 */
-
+select * from EntradaConocimiento
+select * from EntradasAlumno
+insert into EntradasAlumno values ('201868978',5)
 /*
-execute buscarEntradas @carrera ='Carrera de prueba',@curso = 'Curso de prueba',@tema ='tema de prueba',@tipoBusqueda = 1
+execute buscarEntradas @carrera ='Carrera de prueba',@curso = 'Curso de prueba',@tema ='tema de prueba',@tipoBusqueda = 0
+select * from entradaConocimiento
 
 execute buscarEntradas @carrera ='computadores', @curso = '',@tema ='',@tipoBusqueda = 1
 
@@ -62,18 +65,22 @@ execute comentarEntrada @carnet = '2018319178' ,@idEntrada = 5, @comentario = 'M
 execute comentarEntrada @carnet = '2018319178' ,@idEntrada = 5, @comentario = 'Siga subiendo articulos asi'
 execute comentarEntrada @carnet = '201868978' ,@idEntrada = 5, @comentario = 'no me quedo del todo claro'
 execute comentarEntrada @carnet = '2018319178' ,@idEntrada = 7, @comentario = 'Que es este articulo tan malo?'
+execute comentarEntrada @carnet = '201868978' ,@idEntrada = 7, @comentario = 'Podria mejorar'
 */
 select * from EntradaConocimiento
 select * from ReviewsAlumnos
-delete from ReviewsAlumnos where idEntrada = 5
-update EntradaConocimiento set puntuacion = 
+select * from Comentarios
+select * from Catalogos
+select * from Alumno
+
 /*
 execute puntuarEntrada @carnet = '2018319178', @idEntrada = 5, @nota = 9;
 execute puntuarEntrada @carnet = '201868978', @idEntrada = 5, @nota = 6;
+execute puntuarEntrada @carnet = '201868978', @idEntrada = 7, @nota = 3;
 execute puntuarEntrada @carnet = '2018319178', @idEntrada = 7, @nota = 2;
 */
-select * from Alumno
+select * from EntradaConocimiento
 /*
-execute verReviewsEntrada @idEntrada = 5
+execute verReviewsEntrada @idEntrada = 7
 */
 
