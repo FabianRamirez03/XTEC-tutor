@@ -65,15 +65,23 @@ AS
 BEGIN
 	IF (select archivo from EntradaConocimiento where idEntrada = @idEntrada) = ''
 	BEGIN
-		select *, 0 columnaPrueba from EntradaConocimiento where idEntrada = @idEntrada;
+		select idEntrada, titulo,cuerpoArticulo, vistas, puntuacion, descripcion, visible, nombreArchivo, fechaCreacion, 0 existeArchivo from EntradaConocimiento where idEntrada = @idEntrada;
 	END;
 	ELSE
 	BEGIN
-		select *, 1 columnaPrueba from EntradaConocimiento where idEntrada = @idEntrada;
+		select idEntrada, titulo,cuerpoArticulo, vistas, puntuacion, descripcion, visible, nombreArchivo, fechaCreacion, 1 existeArchivo from EntradaConocimiento where idEntrada = @idEntrada;
 	END;
 END;
 GO
 
+--Obtiene el archivo de una entrada en especifico
+CREATE OR ALTER PROCEDURE descargarArchivo @idEntrada int
+AS
+BEGIN
+	select archivo, extension, nombreArchivo from EntradaConocimiento where idEntrada = @idEntrada;
+END;
+GO
+execute descargarArchivo @idEntrada = 21
 
 --Habilitar o deshabilitar la visibilidad de un curso
 CREATE OR ALTER PROCEDURE cambiarVisibilidad (@idEntrada int)

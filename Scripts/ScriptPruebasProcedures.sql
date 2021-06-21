@@ -50,11 +50,12 @@ execute crearEntradaConocimiento @carnet = '2018319178', @titulo = 'Titulo de pr
 @curso = 'Curso de prueba' , @tema = 'tema de prueba'
 
 */
-select * from EntradaConocimiento --id 20
+select * from EntradaConocimiento
+select * from Catalogos
 /*
 execute verEntradasAlumno @carnet = '2018319178'
 */
-execute obtenerEntrada @idEntrada = 5
+execute obtenerEntrada @idEntrada = 21
 /*
 execute buscarEntradas @carrera ='Carrera de prueba',@curso = 'Curso de prueba',@tema ='tema de prueba',@tipoBusqueda = 0
 select * from entradaConocimiento
@@ -87,4 +88,5 @@ select * from EntradaConocimiento
 /*
 execute verReviewsEntrada @idEntrada = 7
 */
-execute obtenerEntrada @idEntrada = 19
+execute verEntradasAlumno @carnet = '2018319178'
+select * from EntradaConocimiento
