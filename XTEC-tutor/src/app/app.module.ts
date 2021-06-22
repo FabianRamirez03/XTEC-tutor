@@ -6,6 +6,11 @@ import { AppComponent } from './app.component';
 import { AdminNavBarComponent } from './Components/admin-nav-bar/admin-nav-bar.component';
 import { FooterComponent } from './Components/footer/footer.component';
 import {FormsModule} from "@angular/forms";
+import { UploadComponent } from './upload/upload.component';
+import { HttpClientModule } from '@angular/common/http';
+import { DownloadComponent } from './download/download.component';
+
+
 
 
 @NgModule({
@@ -14,11 +19,14 @@ import {FormsModule} from "@angular/forms";
     routingComponents,
     AdminNavBarComponent,
     FooterComponent,
+    UploadComponent,
+    DownloadComponent,
   ],
     imports: [
         BrowserModule,
         AppRoutingModule,
-        FormsModule
+        FormsModule,
+        HttpClientModule
     ],
   providers: [],
   bootstrap: [AppComponent]
