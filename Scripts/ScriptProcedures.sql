@@ -24,18 +24,24 @@ CREATE OR ALTER PROCEDURE iniciarSesion @usuario varchar(50), @contrasena varcha
 AS
 Begin
 	DECLARE @tipoUsuario int;
+	--En caso de ser administrador
 	IF Exists (select * from Administrador where usuario = @usuario and contrasena = @contrasena)
 	Begin
 		set @tipoUsuario = 1;
+
 	End;
+	--En caso de ser alumno
 	Else if Exists (select * from Alumno where carnet = @usuario and contrasena = @contrasena)
 	Begin
 		set @tipoUsuario = 2;
+		select @tipoUsuario tipoUsuario, primerNombre, apellido, descripcion, sede, telefono, fechaUnion, fotografia, correo from Alumno where carnet = @usuario and contrasena = @contrasena;
+		return;
 	End;
+	--En caso que no exista el usuario
 	Else Begin
 		set @tipoUsuario = 0;
 	End;
-	return @tipoUsuario;
+	select @tipoUsuario tipoUsuario;
 End;
 Go
 
@@ -197,6 +203,7 @@ BEGIN
 	UPDATE EntradaConocimiento set vistas = vistas + 1 where idEntrada = @idEntrada;
 END;
 GO
+
 
 --****TRIGGERS****
 --Trigger para puntuacion inicial en 0
