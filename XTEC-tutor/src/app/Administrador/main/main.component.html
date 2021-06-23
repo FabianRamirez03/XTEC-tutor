@@ -5,15 +5,10 @@
 <form class="select-custom">
   <label for="SelectCarrera" class="form-font">Carrera</label>
   <div class="input-group mb-3">
-    <select class="form-control" id="SelectCarrera">
-      <option selected="selected">Seleccione una carrera</option>
-      <option>Ingeniería en Computadores</option>
-      <option>Ingeniería en Electrónica</option>
-      <option>Ingeniería en Computación</option>
-      <option>Ingeniería en Mecactrónica</option>
-      <option>Administración de empresas</option>
+    <select class="form-control" id="SelectCarrera" (click)="getCarreras()">
+      <option *ngFor="let carr of listaCarreras">{{ carr.carrera }}</option>
     </select><div class="input-group-append">
-      <button class="btn btn-outline-secondary" type="button">Nueva Carrera</button>
+      <button class="btn btn-outline-secondary" type="button" mat-raised-button id="nuevaCarrera-button" (click)="openCentrado(carrera)">Nueva Carrera</button>
     </div>
   </div>
 
@@ -21,18 +16,95 @@
 
   <label for="SelectCurso" class="form-font">Curso</label>
   <div class="input-group mb-1">
-    <select class="form-control" id="SelectCurso">
-      <option selected="selected">Seleccione una curso</option>
-      <option>Bases de datos</option>
-      <option>Cálculo superior</option>
-      <option>Introducción a la programación</option>
-      <option>Taller de programación</option>
-      <option>Matemática Discreta</option>
-    </select><div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="button">Nueva Curso</button>
+    <select class="form-control" id="SelectCurso" (click)="getCursos(1);getTemas()">
+      <option *ngFor="let curs of listaCursos">{{ curs.curso }}</option>
+    </select>
+    <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button" (click)="openCentrado(curso)">Nueva Curso</button>
+    </div>
   </div>
+
+  <label for="ListaTemas" class="form-font" style="margin-top: 15px">Temas</label>
+  <div class="input-group mb-1">
+    <button class="btn btn-outline-secondary" type="button" style="margin-left: 91%" (click)="openCentrado(tema)">Nueva tema</button>
+    <ul class="list-group list-group-flush list-custom" id="ListaTemas">
+      <li *ngFor="let tem of listaTemas">{{tem.tema}}</li>
+    </ul>
   </div>
 
 </form>
+
+
+<ng-template #carrera let-modal>
+  <div class="modal-header">
+    <h1 class="modal-title">Nueva carrera</h1>
+    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <input type="text" class="form-control" id="nuevaCarrera" aria-describedby="emailHelp" placeholder="Ingresa nombre de la nueva carrera">
+        <small id="carreraHelp" class="form-text text-muted">El nombre de la carrera debe ser diferente a las existentes.</small>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-success" (click)="crearCarrera();modal.close()">Guardar cambios</button>
+  </div>
+</ng-template>
+
+<ng-template #curso let-modal>
+  <div class="modal-header">
+    <h1 class="modal-title">Nuevo curso</h1>
+    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <select class="form-control" id="SelectCarreraModalCurso" (click)="getCarreras()">
+        <option *ngFor="let carr of listaCarreras">{{ carr.carrera }}</option>
+      </select>
+
+      <div class="form-group" style="margin-top: 5%">
+        <input type="text" class="form-control" id="nuevaCurso" aria-describedby="emailHelp" placeholder="Ingresa nombre del nuevo curso">
+        <small id="carreraHelpCurso" class="form-text text-muted">El nombre del curso debe ser distintos al resto de la carrera.</small>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-success" (click)="crearCurso();modal.close()">Guardar cambios</button>
+  </div>
+</ng-template>
+
+<ng-template #tema let-modal>
+  <div class="modal-header">
+    <h1 class="modal-title">Nuevo tema</h1>
+    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" >
+    <form>
+      <select class="form-control" id="SelectCarreraModalTema"(click)="getCarreras()">
+        <option *ngFor="let carr of listaCarreras">{{ carr.carrera }}</option>
+      </select>
+
+      <select class="form-control" id="SelectCursoModalTema" (click)="getCursos(2)" style="margin-top: 5%">
+        <option *ngFor="let cur of listaCursos">{{ cur.curso }}</option>
+      </select>
+
+      <div class="form-group" style="margin-top: 5%">
+        <input type="text" class="form-control" id="nuevoTema" aria-describedby="emailHelp" placeholder="Ingresa el nombre del nuevo tema">
+        <small id="temaHelp" class="form-text text-muted">El nombre del tema debe ser distinto al resto de la curso.</small>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-success" (click)="crearTema();modal.close()">Guardar cambios</button>
+  </div>
+</ng-template>
 
 <app-footer></app-footer>

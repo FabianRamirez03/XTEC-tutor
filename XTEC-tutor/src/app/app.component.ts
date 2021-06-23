@@ -18,10 +18,10 @@ constructor(private http: HttpClient, private fileService: FileService) {}
   private getPhotos = () => {
     // @ts-ignore
     this.fileService.getPhotos().subscribe(data => this.photos = data['photos']);
-  }
+  };
   public returnToCreate = () => {
     this.getPhotos();
-  }
+  };
 
   public createImgPath = (serverPath: string) => {
     return `https://localhost:5001/${serverPath}`;
