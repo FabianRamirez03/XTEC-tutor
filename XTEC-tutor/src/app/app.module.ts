@@ -11,7 +11,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminNavBarComponent } from './Components/admin-nav-bar/admin-nav-bar.component';
 import { FooterComponent } from './Components/footer/footer.component';
 import {FormsModule} from "@angular/forms";
+import { UploadComponent } from './upload/upload.component';
+import { HttpClientModule } from '@angular/common/http';
+import { DownloadComponent } from './download/download.component';
 import { StudentNavBarComponent } from './Components/student-nav-bar/student-nav-bar.component';
+
+
 
 
 @NgModule({
@@ -20,6 +25,8 @@ import { StudentNavBarComponent } from './Components/student-nav-bar/student-nav
     routingComponents,
     AdminNavBarComponent,
     FooterComponent,
+    UploadComponent,
+    DownloadComponent,
     StudentNavBarComponent,
   ],
     imports: [
@@ -28,7 +35,9 @@ import { StudentNavBarComponent } from './Components/student-nav-bar/student-nav
         FormsModule,
         BrowserAnimationsModule,
         MatButtonModule,
-        MatDialogModule
+        MatDialogModule,
+        FormsModule,
+        HttpClientModule
     ],
   providers: [],
   bootstrap: [AppComponent]

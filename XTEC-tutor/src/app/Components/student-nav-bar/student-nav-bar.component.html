@@ -28,6 +28,11 @@
       <a class="nav-link" routerLink="/login" >Cerrar sesión</a>
     </li>
   </ul>
+  <ul class="navbar-nav ms-auto" >
+    <form class="form-inline ms-auto justify-content-end">
+      <a class="nav-link" routerLink="/inicio" >{{this.fileService.getUser().primerNombre}} {{this.fileService.getUser().apellido}}</a>
+    </form>
+  </ul>
 </nav>
 
 

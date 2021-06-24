@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FileService} from "../../_service/file.service";
 
 @Component({
   selector: 'app-student-nav-bar',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StudentNavBarComponent implements OnInit {
 
-  constructor() { }
+  constructor(public fileService: FileService) { }
 
   ngOnInit(): void {
   }
