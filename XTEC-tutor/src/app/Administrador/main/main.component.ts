@@ -15,6 +15,7 @@ export class MainComponent implements OnInit {
   listaCursos=[{curso: 'Seleccione Cursos'}];
   listaTemas=[{tema: 'Seleccione Temas'}];
   ngOnInit(): void {
+    this.getCarreras()
   }
 
   // @ts-ignore
@@ -23,7 +24,8 @@ export class MainComponent implements OnInit {
   }
 
   getCarreras(){
-    this.fileService.getCarreras().subscribe((resp:any) => {this.listaCarreras = resp})
+    this.fileService.getCarreras().subscribe((resp:any) => {this.listaCarreras = resp; this.getCursos(1)})
+
   }
 
   getCursos(opcion:number){
@@ -35,7 +37,7 @@ export class MainComponent implements OnInit {
       id = "SelectCarreraModalTema"
     }
     this.fileService.getCursos((document.getElementById(id) as HTMLInputElement).value).
-    subscribe((resp:any) => {this.listaCursos = resp;})
+    subscribe((resp:any) => {this.listaCursos = resp})
   }
 
   getTemas(){
@@ -61,6 +63,9 @@ export class MainComponent implements OnInit {
     const curso = (document.getElementById('SelectCursoModalTema') as HTMLInputElement).value;
     const tema = (document.getElementById('nuevoTema') as HTMLInputElement).value;
     this.fileService.crearCatalogo(carrera,curso,tema);
+  }
+  alerta(){
+    alert("Entra");
   }
 
 

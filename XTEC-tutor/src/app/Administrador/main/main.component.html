@@ -5,7 +5,7 @@
 <form class="select-custom">
   <label for="SelectCarrera" class="form-font">Carrera</label>
   <div class="input-group mb-3">
-    <select class="form-control" id="SelectCarrera" (click)="getCarreras()">
+    <select class="form-control" id="SelectCarrera" (change)="getCursos(1);getTemas()">
       <option *ngFor="let carr of listaCarreras">{{ carr.carrera }}</option>
     </select><div class="input-group-append">
       <button class="btn btn-outline-secondary" type="button" mat-raised-button id="nuevaCarrera-button" (click)="openCentrado(carrera)">Nueva Carrera</button>
@@ -16,17 +16,17 @@
 
   <label for="SelectCurso" class="form-font">Curso</label>
   <div class="input-group mb-1">
-    <select class="form-control" id="SelectCurso" (click)="getCursos(1);getTemas()">
+    <select class="form-control" id="SelectCurso" (load)="getTemas()" (click)="getTemas()">
       <option *ngFor="let curs of listaCursos">{{ curs.curso }}</option>
     </select>
     <div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="button" (click)="openCentrado(curso)">Nueva Curso</button>
+    <button class="btn btn-outline-secondary" type="button" (click)="getCarreras(); openCentrado(curso)">Nuevo Curso</button>
     </div>
   </div>
 
   <label for="ListaTemas" class="form-font" style="margin-top: 15px">Temas</label>
   <div class="input-group mb-1">
-    <button class="btn btn-outline-secondary" type="button" style="margin-left: 91%" (click)="openCentrado(tema)">Nueva tema</button>
+    <button class="btn btn-outline-secondary" type="button" style="margin-left: 91%" (click)="openCentrado(tema); getCarreras()">Nuevo tema</button>
     <ul class="list-group list-group-flush list-custom" id="ListaTemas">
       <li *ngFor="let tem of listaTemas">{{tem.tema}}</li>
     </ul>
@@ -64,7 +64,7 @@
   </div>
   <div class="modal-body">
     <form>
-      <select class="form-control" id="SelectCarreraModalCurso" (click)="getCarreras()">
+      <select class="form-control" id="SelectCarreraModalCurso">
         <option *ngFor="let carr of listaCarreras">{{ carr.carrera }}</option>
       </select>
 
@@ -88,11 +88,11 @@
   </div>
   <div class="modal-body" >
     <form>
-      <select class="form-control" id="SelectCarreraModalTema"(click)="getCarreras()">
+      <select class="form-control" id="SelectCarreraModalTema" (change)="getCursos(2)">
         <option *ngFor="let carr of listaCarreras">{{ carr.carrera }}</option>
       </select>
 
-      <select class="form-control" id="SelectCursoModalTema" (click)="getCursos(2)" style="margin-top: 5%">
+      <select class="form-control" id="SelectCursoModalTema" style="margin-top: 5%">
         <option *ngFor="let cur of listaCursos">{{ cur.curso }}</option>
       </select>
 

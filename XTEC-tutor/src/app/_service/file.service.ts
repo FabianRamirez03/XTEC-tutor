@@ -7,7 +7,7 @@ import {HttpClient, HttpResponse} from "@angular/common/http";
 export class FileService {
   usuario: any = {};
   constructor(private http: HttpClient) { }
-  public  url = "https://localhost:5001/api"
+  public  url = "https://xtectutorapi.azurewebsites.net/api";
   public upload(formData: FormData) {
     return this.http.post(`${this.url}/file/upload`, formData, {
       reportProgress: true,
