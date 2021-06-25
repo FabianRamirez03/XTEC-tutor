@@ -8,6 +8,7 @@ export class FileService {
   usuario: any = {};
   constructor(private http: HttpClient) { }
   public  url = "https://xtectutorapi.azurewebsites.net/api";
+  // public  url = "https://localhost:5001/api";
   public upload(formData: FormData) {
     return this.http.post(`${this.url}/file/upload`, formData, {
       reportProgress: true,
@@ -55,11 +56,20 @@ export class FileService {
             carrera: carrera,
             curso: curso,
             tema: tema
-    }).subscribe(_=>{alert(`Catalogo de ${carrera} creada por ${this.getUser().carnet.toString()}`)});
+    }).subscribe(_=>{alert(`Catalogo de ${carrera} creado exitosamente`)});
+  }
+
+  public editarPerfil(usuario:any){
+    console.log(usuario);
+    return this.http.post(`${this.url}/Users/editarPerfil`,usuario)
   }
 
   public getCarreras(){
     return this.http.get(`${this.url}/Catalogos/getCarreras`)
+  }
+
+  public getEntradas(){
+    return this.http.get(`${this.url}/Entrada/verEntradas?carnet=${this.getUser().carnet}`)
   }
 
   public getCursos(carrera:string){
@@ -77,6 +87,8 @@ export class FileService {
   public setUser(user:any){
     window.localStorage.setItem("usuario", JSON.stringify(user));
   }
+
+
 
 
 

@@ -70,13 +70,13 @@
                 <h3 class="mb-0" style="color: #2B2D42">Contraseña</h3>
               </div>
               <div class="col-sm-9 text-secondary">
-                <input type="text" class="form-control" id="contraseña" value="{{this.fileService.getUser().password}}">
+                <input type="text" class="form-control" id="contrasena" value="{{this.fileService.getUser().password}}">
               </div>
             </div>
             <div class="row">
               <div class="col-sm-3"></div>
               <div class="col-sm-9 text-secondary">
-                <input type="button" class="btn btn-danger" value="Guardar cambios">
+                <input type="button" class="btn btn-danger" value="Guardar cambios" (click)="editarPerfil()">
               </div>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <div class="card-body">
               <div>
                 <h2 class="d-flex align-items-center mb-3 customH2">Mis entradas de conocimiento</h2>
-                <input type="button" class="btn btn-danger" style="margin-bottom: 10px" value="Nueva entrada de conocimiento">
+                <input type="button" routerLink="/crearEntrada" class="btn btn-danger" style="margin-bottom: 10px" value="Nueva entrada de conocimiento">
               </div>
               <table class="table table-striped">
                 <thead>
@@ -104,25 +104,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                  <th scope="row">Prueba para visitas</th>
-                  <td>11</td>
-                  <td>0.0</td>
-                  <td>Descripción de la prueba</td>
-                  <td>Habilitado</td>
-                  <td>Computadores</td>
-                  <td>Intro de taller</td>
-                  <td>Recursividad</td>
-                </tr>
-                <tr>
-                  <th scope="row">Prueba para visitas</th>
-                  <td>11</td>
-                  <td>0.0</td>
-                  <td>Descripción de la prueba</td>
-                  <td>Habilitado</td>
-                  <td>Computadores</td>
-                  <td>Intro de taller</td>
-                  <td>Recursividad</td>
+                <tr *ngFor="let entrada  of listaEntradas">
+                  <th scope="row">{{entrada.titulo}}</th>
+                  <td>{{entrada.vistas}}</td>
+                  <td>{{entrada.puntuacion}}</td>
+                  <td>{{entrada.descripcion}}</td>
+                  <td>{{entrada.visible}}</td>
+                  <td>{{entrada.carrera}}</td>
+                  <td>{{entrada.curso}}</td>
+                  <td>{{entrada.tema}}</td>
                 </tr>
                 </tbody>
               </table>

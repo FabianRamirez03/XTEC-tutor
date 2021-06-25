@@ -1,7 +1,7 @@
-<div class="row" style="margin-bottom:15px;">
+<div class="row" style="margin-top:15px;">
   <div class="col-md-3">
+    <button type="button" class="btn btn-success" (click)="file.click()">Subir Archivo</button>
     <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;">
-    <button type="button" class="btn btn-success" (click)="file.click()">Upload File</button>
   </div>
   <div class="col-md-4">
     <span class="upload" *ngIf="progress > 0">

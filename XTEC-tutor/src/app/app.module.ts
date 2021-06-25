@@ -11,7 +11,7 @@ import { DatePipe } from '@angular/common';
 
 import { AdminNavBarComponent } from './Components/admin-nav-bar/admin-nav-bar.component';
 import { FooterComponent } from './Components/footer/footer.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { UploadComponent } from './upload/upload.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DownloadComponent } from './download/download.component';
@@ -33,19 +33,20 @@ import {EditorModule} from "@tinymce/tinymce-angular";
     StudentNavBarComponent,
     CrearEntradaComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        BrowserAnimationsModule,
-        MatButtonModule,
-        MatDialogModule,
-        FormsModule,
-        HttpClientModule,
-        EditorModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatDialogModule,
+    FormsModule,
+    HttpClientModule,
+    EditorModule,
+    ReactiveFormsModule
+  ],
   providers: [DatePipe],
-    
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,10 +1,42 @@
-
-<h1>TinyMCE 5 Angular Demo</h1>
+<app-student-nav-bar></app-student-nav-bar>
 <div class="container">
-<editor
-  apiKey="b7lxug636gyeerlit3h7jrrl1la1fc7airfeak0o32ut6x3a"
-  initialValue="<p>Initial content of the editor</p>"
-  [init]="{
+  <form class="select-custom">
+    <h1>Crear Artículo</h1>'
+    <label for="SelectCarrera" class="form-font">Carrera</label>
+    <div class="input-group mb-3">
+      <select class="form-control" id="SelectCarrera" (change)="getCursos(1)">
+        <option *ngFor="let carr of listaCarreras">{{ carr.carrera }}</option>
+      </select><div class="input-group-append">
+    </div>
+    </div>
+
+    <label for="SelectCurso" class="form-font">Curso</label>
+    <div class="input-group mb-1">
+      <select class="form-control" id="SelectCurso" (load)="getTemas()" (click)="getTemas()">
+        <option *ngFor="let curs of listaCursos">{{ curs.curso }}</option>
+      </select>
+      <div class="input-group-append">
+      </div>
+    </div>
+    <label for="ListaTemas" class="form-font" style="margin-top: 5px">Temas</label>
+    <div class="input-group mb-1">
+      <select class="form-control" id="ListaTemas" (load)="getTemas()">
+        <option *ngFor="let tema of listaTemas">{{ tema.tema }}</option>
+      </select>
+      <div class="input-group-append">
+      </div>
+    </div>
+
+  </form>
+  <input type="text" class="form-control" id="titulo" aria-describedby="emailHelp" placeholder="Título" style="margin-top:25px;">
+  <input type="text" class="form-control" id="descripcion" aria-describedby="emailHelp" placeholder="Descripción">
+  <form [formGroup]="entrada" (ngSubmit)="submit()">
+    <editor
+      apiKey="b7lxug636gyeerlit3h7jrrl1la1fc7airfeak0o32ut6x3a"
+      id="editorId"
+      initialValue="<p>Inicio del Artículo</p>"
+      formControlName="message"
+      [init]="{
     height: 500,
     menubar: false,
     plugins: [
@@ -15,10 +47,32 @@
     ],
     toolbar:
       'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
-       'bullist numlist outdent indent| removeformat | help'
+       'bullist numlist outdsent indent| removeformat | help'
   }"
->
-</editor>
-  <input type="submit">
+    >
+    </editor>
+  </form>
+  <div class="row">
+    <div class="column">
+      <div class="row" style="margin-top:15px;">
+        <div class="col-md-3">
+          <button type="button" class="btn btn-success" (click)="file.click()">Subir Archivo</button>
+          <input type="file" #file placeholder="Choose file" (change)="subirArchivo(file.files)" style="display:none;">
+        </div>
+        <div class="col-md-4">
+    <span class="upload" *ngIf="progress > 0">
+      {{progress}}%
+    </span>
+          <span class="upload" *ngIf="message">
+      {{message}}
+    </span>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+      <input type="button" class="btn btn-danger" value="Publicar Entrada" (click)="uploadFile()" style="float: right;">
+    </div>
+  </div>
 </div>
 
+<!--<app-footer></app-footer>-->
