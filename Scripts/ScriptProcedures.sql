@@ -79,7 +79,6 @@ BEGIN
 END;
 GO
 
-
 --Obtiene el archivo de una entrada en especifico
 CREATE OR ALTER PROCEDURE descargarArchivo @idEntrada int
 AS
@@ -200,14 +199,22 @@ BEGIN
 END;
 GO
 
+
 --Aumenta las vistas de una entrada de conocimiento en 1
-CREATE OR ALTER PROCEDURE agregarVista ( @idEntrada int)
+CREATE OR ALTER PROCEDURE agregarVista (@idEntrada int)
 AS
 BEGIN
-	UPDATE Vistas set cantidadVistas = cantidadVistas + 1 where idEntrada = @idEntrada;
+	DECLARE @fecha date = getDate();
+	IF EXISTS (select idVista from Vistas where idEntrada = @idEntrada and fechaVista = @fecha)
+	Begin
+		UPDATE Vistas set cantidadVistas = cantidadVistas + 1 where idEntrada = @idEntrada and fechaVista = @fecha;
+	End;
+	ELSE
+	BEGIN
+		INSERT into Vistas (fechaVista,cantidadVistas,idEntrada) values (@fecha,1,@idEntrada);
+	END
 END;
 GO
-
 
 --****TRIGGERS****
 --Trigger para puntuacion inicial en 0
