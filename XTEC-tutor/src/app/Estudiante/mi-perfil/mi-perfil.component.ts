@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FileService} from "../../_service/file.service";
 import {DatePipe} from '@angular/common'
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-mi-perfil',
@@ -9,7 +10,7 @@ import {DatePipe} from '@angular/common'
 })
 export class MiPerfilComponent implements OnInit {
 
-  constructor(public fileService: FileService, public datepipe: DatePipe) { }
+  constructor(public fileService: FileService, public datepipe: DatePipe, private route: ActivatedRoute) { }
   listaEntradas:any;
   fechaUnionModificada: any;
 

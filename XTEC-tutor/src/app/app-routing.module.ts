@@ -5,6 +5,8 @@ import { MainComponent } from './Administrador/main/main.component';
 import { DashBoardComponent } from './Estudiante/dash-board/dash-board.component';
 import {CrearEntradaComponent} from "./Estudiante/crear-entrada/crear-entrada.component";
 import { MiPerfilComponent } from './Estudiante/mi-perfil/mi-perfil.component';
+import { PageNotFoundComponent } from './Components/page-not-found/page-not-found.component';
+import { VerEntradaComponent } from './Estudiante/ver-entrada/ver-entrada.component';
 
 
 const routes: Routes = [
@@ -13,7 +15,10 @@ const routes: Routes = [
   {path: 'admin', component: MainComponent},
   {path: 'inicio', component: DashBoardComponent},
   {path: 'crearEntrada', component: CrearEntradaComponent},
-  {path: 'perfil', component: MiPerfilComponent}
+  {path: 'perfil', component: MiPerfilComponent},
+  {path: 'entrada/:id', component: VerEntradaComponent},
+  {path: '**', component: PageNotFoundComponent},
+
 ];
 
 @NgModule({
@@ -21,4 +26,11 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-export const routingComponents = [LoginComponent, MainComponent, DashBoardComponent,CrearEntradaComponent, MiPerfilComponent ]
+export const routingComponents = [
+  LoginComponent,
+  MainComponent,
+  DashBoardComponent,
+  CrearEntradaComponent,
+  MiPerfilComponent,
+  PageNotFoundComponent,
+  VerEntradaComponent]
