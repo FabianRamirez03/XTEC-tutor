@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DatePipe } from '@angular/common';
 
 import { AdminNavBarComponent } from './Components/admin-nav-bar/admin-nav-bar.component';
 import { FooterComponent } from './Components/footer/footer.component';
@@ -37,9 +38,9 @@ import { StudentNavBarComponent } from './Components/student-nav-bar/student-nav
         MatButtonModule,
         MatDialogModule,
         FormsModule,
-        HttpClientModule
+        HttpClientModule,
     ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {FileService} from "../../_service/file.service";
+import {DatePipe} from '@angular/common'
 
 @Component({
   selector: 'app-mi-perfil',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MiPerfilComponent implements OnInit {
 
-  constructor() { }
+  constructor(public fileService: FileService, public datepipe: DatePipe) { }
+
+  fechaUnionModificada: any;
 
   ngOnInit(): void {
+    this.fechaUnionModificada = this.transformDate()
+  }
+  transformDate(){
+    return this.datepipe.transform(this.fileService.getUser().fechaUnion, 'dd/MM/yyyy, h:mm a');
   }
 
 }

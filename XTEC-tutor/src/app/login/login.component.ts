@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
           this.fileService.setUser(this.fileService.usuario);
           this.router.navigate(['/', 'inicio']);
         } else {
-          alert("No se ha podido reconocer la cuenta jeje salu2")
+          alert("Credenciales inválidas")
         }
       }
   )
