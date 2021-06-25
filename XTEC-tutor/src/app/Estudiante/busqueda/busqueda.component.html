@@ -1,0 +1,85 @@
+<div class="body"></div>
+<app-student-nav-bar></app-student-nav-bar>
+
+<div class="container" style="width: auto">
+  <div class="main-body">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="card">
+          <div class="card-body">
+
+            <label for="SelectCarrera" class="form-font">Carrera</label>
+            <div class="input-group mb-3">
+              <select class="form-control" id="SelectCarrera" (change)="getCursos(1)">
+                <option *ngFor="let carr of listaCarreras">{{ carr.carrera }}</option>
+              </select><div class="input-group-append">
+            </div>
+            </div>
+            <label for="SelectCurso" class="form-font">Curso</label>
+            <div class="input-group mb-1">
+              <select class="form-control" id="SelectCurso" (load)="getTemas()" (click)="getTemas()">
+                <option *ngFor="let curs of listaCursos">{{ curs.curso }}</option>
+              </select>
+              <div class="input-group-append">
+              </div>
+            </div>
+            <label for="ListaTemas" class="form-font" style="margin-top: 5px">Temas</label>
+            <div class="input-group mb-1">
+              <select class="form-control" id="ListaTemas" (load)="getTemas()">
+                <option *ngFor="let tema of listaTemas">{{ tema.tema }}</option>
+              </select>
+              <div class="input-group-append">
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-3"></div>
+              <div class="col-sm-9 text-secondary">
+                <input type="button" class="btn btn-danger" value="Buscar" (click)="buscarPerfil()">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" >
+        <div class="col-sm-12">
+          <div class="card">
+            <div class="card-body">
+              <div>
+                <h2 class="d-flex align-items-center mb-3 customH2">Entradas de conocimiento</h2>
+              </div>
+              <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th scope="col">Título</th>
+                  <th scope="col">Vistas</th>
+                  <th scope="col">Puntuación</th>
+                  <th scope="col">Descripción</th>
+                  <th scope="col">Visible</th>
+                  <th scope="col">Carrera</th>
+                  <th scope="col">Curso</th>
+                  <th scope="col">Tema</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let entrada  of listaEntradas">
+                  <th scope="row">{{entrada.titulo}}</th>
+                  <td>{{entrada.vistas}}</td>
+                  <td>{{entrada.puntuacion}}</td>
+                  <td>{{entrada.descripcion}}</td>
+                  <td>{{entrada.visible}}</td>
+                  <td>{{entrada.carrera}}</td>
+                  <td>{{entrada.curso}}</td>
+                  <td>{{entrada.tema}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
