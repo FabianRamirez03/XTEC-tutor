@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DatePipe } from '@angular/common';
 
 import { AdminNavBarComponent } from './Components/admin-nav-bar/admin-nav-bar.component';
 import { FooterComponent } from './Components/footer/footer.component';
@@ -16,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { DownloadComponent } from './download/download.component';
 import { StudentNavBarComponent } from './Components/student-nav-bar/student-nav-bar.component';
 import { CrearEntradaComponent } from './Estudiante/crear-entrada/crear-entrada.component';
+import {EditorModule} from "@tinymce/tinymce-angular";
 
 
 
@@ -39,9 +41,11 @@ import { CrearEntradaComponent } from './Estudiante/crear-entrada/crear-entrada.
         MatButtonModule,
         MatDialogModule,
         FormsModule,
-        HttpClientModule
+        HttpClientModule,
+        EditorModule
     ],
-  providers: [],
+  providers: [DatePipe],
+    
   bootstrap: [AppComponent]
 })
 export class AppModule { }

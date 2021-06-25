@@ -1,1 +1,24 @@
-<p>crear-entrada works!</p>
+
+<h1>TinyMCE 5 Angular Demo</h1>
+<div class="container">
+<editor
+  apiKey="b7lxug636gyeerlit3h7jrrl1la1fc7airfeak0o32ut6x3a"
+  initialValue="<p>Initial content of the editor</p>"
+  [init]="{
+    height: 500,
+    menubar: false,
+    plugins: [
+      'advlist autolink lists link image charmap print',
+      'preview anchor searchreplace visualblocks code',
+      'fullscreen insertdatetime media table paste',
+      'help wordcount'
+    ],
+    toolbar:
+      'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+       'bullist numlist outdent indent| removeformat | help'
+  }"
+>
+</editor>
+  <input type="submit">
+</div>
+

@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { MainComponent } from './Administrador/main/main.component';
 import { DashBoardComponent } from './Estudiante/dash-board/dash-board.component';
 import {CrearEntradaComponent} from "./Estudiante/crear-entrada/crear-entrada.component";
+import { MiPerfilComponent } from './Estudiante/mi-perfil/mi-perfil.component';
 
 
 const routes: Routes = [
@@ -11,7 +12,8 @@ const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full' },
   {path: 'admin', component: MainComponent},
   {path: 'inicio', component: DashBoardComponent},
-  {path: 'crearEntrada', component: CrearEntradaComponent}
+  {path: 'crearEntrada', component: CrearEntradaComponent},
+  {path: 'perfil', component: MiPerfilComponent}
 ];
 
 @NgModule({
@@ -19,4 +21,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-export const routingComponents = [LoginComponent, MainComponent, DashBoardComponent, CrearEntradaComponent];
+export const routingComponents = [LoginComponent, MainComponent, DashBoardComponent,CrearEntradaComponent, MiPerfilComponent ]

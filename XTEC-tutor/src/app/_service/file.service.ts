@@ -41,9 +41,9 @@ export class FileService {
               this.usuario.fechaUnion = resp.fechaUnion;
               this.usuario.fotografia = resp.fotografia;
               this.usuario.correo = resp.correo;
+              this.usuario.password = password;
           }
           console.log(this.usuario);
-
           return this.usuario.tipoUsuario;
         })
   }
