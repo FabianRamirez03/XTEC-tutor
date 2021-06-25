@@ -7,6 +7,7 @@ import {CrearEntradaComponent} from "./Estudiante/crear-entrada/crear-entrada.co
 import { MiPerfilComponent } from './Estudiante/mi-perfil/mi-perfil.component';
 import { PageNotFoundComponent } from './Components/page-not-found/page-not-found.component';
 import { VerEntradaComponent } from './Estudiante/ver-entrada/ver-entrada.component';
+import { BusquedaComponent } from './Estudiante/busqueda/busqueda.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,8 @@ const routes: Routes = [
   {path: 'entrada/:id', component: VerEntradaComponent},
   {path: '**', component: PageNotFoundComponent},
 
+  {path: 'perfil', component: MiPerfilComponent},
+  {path: 'busqueda', component: BusquedaComponent}
 ];
 
 @NgModule({
@@ -34,3 +37,4 @@ export const routingComponents = [
   MiPerfilComponent,
   PageNotFoundComponent,
   VerEntradaComponent]
+export const routingComponents = [LoginComponent, MainComponent, DashBoardComponent,CrearEntradaComponent, MiPerfilComponent, BusquedaComponent ]

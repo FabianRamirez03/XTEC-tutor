@@ -18,6 +18,7 @@ import { DownloadComponent } from './download/download.component';
 import { StudentNavBarComponent } from './Components/student-nav-bar/student-nav-bar.component';
 import { CrearEntradaComponent } from './Estudiante/crear-entrada/crear-entrada.component';
 import {EditorModule} from "@tinymce/tinymce-angular";
+import { BusquedaComponent } from './Estudiante/busqueda/busqueda.component';
 
 
 
@@ -32,6 +33,7 @@ import {EditorModule} from "@tinymce/tinymce-angular";
     DownloadComponent,
     StudentNavBarComponent,
     CrearEntradaComponent,
+    BusquedaComponent,
   ],
   imports: [
     BrowserModule,
