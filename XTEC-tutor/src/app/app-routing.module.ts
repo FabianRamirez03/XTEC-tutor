@@ -18,10 +18,8 @@ const routes: Routes = [
   {path: 'crearEntrada', component: CrearEntradaComponent},
   {path: 'perfil', component: MiPerfilComponent},
   {path: 'entrada/:id', component: VerEntradaComponent},
+  {path: 'busqueda', component: BusquedaComponent},
   {path: '**', component: PageNotFoundComponent},
-
-  {path: 'perfil', component: MiPerfilComponent},
-  {path: 'busqueda', component: BusquedaComponent}
 ];
 
 @NgModule({
@@ -36,5 +34,5 @@ export const routingComponents = [
   CrearEntradaComponent,
   MiPerfilComponent,
   PageNotFoundComponent,
-  VerEntradaComponent]
-export const routingComponents = [LoginComponent, MainComponent, DashBoardComponent,CrearEntradaComponent, MiPerfilComponent, BusquedaComponent ]
+  VerEntradaComponent,
+  BusquedaComponent]
