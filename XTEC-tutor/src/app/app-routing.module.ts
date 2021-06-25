@@ -6,6 +6,7 @@ import { DashBoardComponent } from './Estudiante/dash-board/dash-board.component
 import {CrearEntradaComponent} from "./Estudiante/crear-entrada/crear-entrada.component";
 import { MiPerfilComponent } from './Estudiante/mi-perfil/mi-perfil.component';
 import { PageNotFoundComponent } from './Components/page-not-found/page-not-found.component';
+import { VerEntradaComponent } from './Estudiante/ver-entrada/ver-entrada.component';
 
 
 const routes: Routes = [
@@ -15,7 +16,9 @@ const routes: Routes = [
   {path: 'inicio', component: DashBoardComponent},
   {path: 'crearEntrada', component: CrearEntradaComponent},
   {path: 'perfil', component: MiPerfilComponent},
-  {path: '**', component: PageNotFoundComponent}
+  {path: 'entrada/:id', component: VerEntradaComponent},
+  {path: '**', component: PageNotFoundComponent},
+
 ];
 
 @NgModule({
@@ -29,4 +32,5 @@ export const routingComponents = [
   DashBoardComponent,
   CrearEntradaComponent,
   MiPerfilComponent,
-  PageNotFoundComponent]
+  PageNotFoundComponent,
+  VerEntradaComponent]

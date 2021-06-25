@@ -105,7 +105,7 @@
                 </thead>
                 <tbody>
                 <tr *ngFor="let entrada  of listaEntradas">
-                  <th scope="row">{{entrada.titulo}}</th>
+                  <th scope="row"><a routerLink="/entrada/{{entrada.idEntrada}}">{{entrada.titulo}}</a></th>
                   <td>{{entrada.vistas}}</td>
                   <td>{{entrada.puntuacion}}</td>
                   <td>{{entrada.descripcion}}</td>
