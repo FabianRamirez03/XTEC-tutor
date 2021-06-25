@@ -72,6 +72,10 @@ export class FileService {
     return this.http.get(`${this.url}/Entrada/verEntradas?carnet=${this.getUser().carnet}`)
   }
 
+  public obtenerEntrada(id:any){
+    return this.http.get(`${this.url}/Entrada/obtenerEntrada?idEntrada=${id}`)
+  }
+
   public getCursos(carrera:string){
     return this.http.get(`${this.url}/Catalogos/getCursos?carrera=${carrera}`)
   }
