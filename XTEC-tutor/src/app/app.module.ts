@@ -15,6 +15,7 @@ import { UploadComponent } from './upload/upload.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DownloadComponent } from './download/download.component';
 import { StudentNavBarComponent } from './Components/student-nav-bar/student-nav-bar.component';
+import { CrearEntradaComponent } from './Estudiante/crear-entrada/crear-entrada.component';
 
 
 
@@ -28,6 +29,7 @@ import { StudentNavBarComponent } from './Components/student-nav-bar/student-nav
     UploadComponent,
     DownloadComponent,
     StudentNavBarComponent,
+    CrearEntradaComponent,
   ],
     imports: [
         BrowserModule,
