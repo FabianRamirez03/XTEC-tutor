@@ -9,6 +9,30 @@ INSERT INTO Alumno (carnet, contrasena, primerNombre, apellido, correo) values (
 End;
 Go
 
+--Agregar habilidades del alumno
+CREATE OR ALTER PROCEDURE agregarHabilidad @carnet varchar (20), @habilidad varchar (200)
+AS
+BEGIN
+	insert into HabilidadesAlumno values (@carnet,@habilidad);
+END;
+GO
+
+--Ver habilidades del alumno
+CREATE OR ALTER PROCEDURE verHabilidades @carnet varchar (20)
+AS
+BEGIN
+	select habilidad from HabilidadesAlumno where carnet = @carnet;
+END;
+GO
+
+CREATE OR ALTER PROCEDURE modificarHabilidades @carnet varchar (20), @habilidad varchar(200), @habilidadEditada varchar (200)
+AS
+BEGIN
+	update HabilidadesAlumno set habilidad = @habilidadEditada where carnet = @carnet and habilidad = @habilidad;
+END;
+GO
+
+
 --Editar perfil
 CREATE OR ALTER PROCEDURE editarPerfil @carnet varchar(20), @contrasena varchar(20), @correo varchar(100), @primerNombre varchar(20),
 @apellido varchar (20), @descripcion varchar (200), @telefono varchar (20), @fotografia varchar (max)
@@ -173,7 +197,7 @@ END;
 GO
 
 --Puntuar entrada de conocimiento
-CREATE OR ALTER PROCEDURE puntuarEntrada (@carnet varchar (20), @idEntrada int, @nota int)
+CREATE OR ALTER PROCEDURE puntuarEntrada (@carnet varchar (20), @idEntrada int, @nota decimal(3,1))
 AS
 BEGIN
 	if not exists (select * from ReviewsAlumnos where carnet = @carnet and idEntrada = @idEntrada)

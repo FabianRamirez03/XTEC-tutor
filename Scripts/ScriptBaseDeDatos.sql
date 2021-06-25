@@ -24,7 +24,6 @@ Create table EntradaConocimiento (
 	idEntrada int identity (1,1),
 	titulo varchar (100) not null,
 	cuerpoArticulo varchar(max),
-	vistas int default 0,
 	puntuacion decimal(3,1),
 	descripcion varchar(max),
 	visible bit not null,
