@@ -13,6 +13,7 @@ Create table Alumno (
 	primary key (carnet)
 );
 
+
 Create table HabilidadesAlumno (
 	carnet varchar(20) not null,
 	habilidad varchar (200) not null,
@@ -31,8 +32,18 @@ Create table EntradaConocimiento (
 	nombreArchivo varchar (100),
 	extension varchar (100),
 	archivo varchar (max),
-	fechaCreacion datetime default getDate(),
+	fechaCreacion date default getDate(),
 	primary key (idEntrada)
+);
+
+
+Create table Vistas (
+	idVista int identity (1,1),
+	fechaVista date default getDate(),
+	cantidadVistas int,
+	idEntrada int,
+	primary key (idVista),
+	CONSTRAINT UC_vistas UNIQUE (idEntrada,fechaVista)
 );
 
 
@@ -56,8 +67,6 @@ Create table ReviewsAlumnos (
 	nota decimal(3,1),
 	primary key (carnet, idEntrada)
 );
-
-alter table ReviewsAlumnos alter column nota decimal (3,1)
 
 Create table Administrador (
 	usuario varchar(50),
@@ -111,3 +120,7 @@ foreign key (idEntrada) references EntradaConocimiento (idEntrada);
 Alter table Catalogos
 Add constraint FK_usuarioAdmin
 foreign key (usuarioAdmin) references Administrador (usuario);
+
+Alter table Vistas
+Add constraint FK_idEntradaVista
+foreign key (idEntrada) references EntradaConocimiento (idEntrada);

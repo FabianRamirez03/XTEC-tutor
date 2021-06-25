@@ -49,9 +49,14 @@ execute crearEntradaConocimiento @carnet = '2018319178', @titulo = 'Titulo de pr
 @extension = '', @archivo = '', @carrera = 'Carrera de prueba',
 @curso = 'Curso de prueba' , @tema = 'tema de prueba'
 
+execute crearEntradaConocimiento @carnet = '201868978', @titulo = 'prueba para vistas 3', @cuerpoArticulo = 'asdjkfga',
+@descripcion = 'Descripcion de prueba', @visible = 1, @nombreArchivo = 'no tiene',
+@extension = '', @archivo = '', @carrera = 'computadores',
+@curso = 'intro y taller' , @tema = 'recursividad'
+
 */
 select * from EntradaConocimiento
-select * from Catalogos
+select * from Alumno
 /*
 execute verEntradasAlumno @carnet = '2018319178'
 */

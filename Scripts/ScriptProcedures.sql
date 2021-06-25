@@ -63,22 +63,22 @@ BEGIN
 END;
 GO
 
-
-
 --Obtiene todos los datos de la entrada de conocimiento e indica si existe un archivo en esta
 CREATE OR ALTER PROCEDURE obtenerEntrada @idEntrada int
 AS
 BEGIN
+	Declare @cantidadVistas int = (select sum (cantidadVistas) from Vistas where idEntrada = @idEntrada);
 	IF (select archivo from EntradaConocimiento where idEntrada = @idEntrada) = ''
 	BEGIN
-		select idEntrada, titulo,cuerpoArticulo, vistas, puntuacion, descripcion, visible, nombreArchivo, fechaCreacion, 0 existeArchivo from EntradaConocimiento where idEntrada = @idEntrada;
+		select idEntrada, titulo,cuerpoArticulo, @cantidadVistas cantidadVistas, puntuacion, descripcion, visible, nombreArchivo, fechaCreacion, 0 existeArchivo from EntradaConocimiento where idEntrada = @idEntrada;
 	END;
 	ELSE
 	BEGIN
-		select idEntrada, titulo,cuerpoArticulo, vistas, puntuacion, descripcion, visible, nombreArchivo, fechaCreacion, 1 existeArchivo from EntradaConocimiento where idEntrada = @idEntrada;
+		select idEntrada, titulo,cuerpoArticulo, @cantidadVistas cantidadVistas, puntuacion, descripcion, visible, nombreArchivo, fechaCreacion, 1 existeArchivo from EntradaConocimiento where idEntrada = @idEntrada;
 	END;
 END;
 GO
+
 
 --Obtiene el archivo de una entrada en especifico
 CREATE OR ALTER PROCEDURE descargarArchivo @idEntrada int
@@ -87,7 +87,6 @@ BEGIN
 	select archivo, extension, nombreArchivo from EntradaConocimiento where idEntrada = @idEntrada;
 END;
 GO
-execute descargarArchivo @idEntrada = 21
 
 --Habilitar o deshabilitar la visibilidad de un curso
 CREATE OR ALTER PROCEDURE cambiarVisibilidad (@idEntrada int)
@@ -101,13 +100,14 @@ GO
 CREATE OR ALTER PROCEDURE verEntradasAlumno (@carnet varchar(20))
 AS
 BEGIN
-	select ec.idEntrada, ec.titulo, ec.vistas, ec.puntuacion, ec.descripcion, ec.visible, c.carrera,c.curso,c.tema from EntradaConocimiento ec 
+	select ec.idEntrada, ec.titulo, (select sum(cantidadVistas) from Vistas where idEntrada = ec.idEntrada) vistas , ec.puntuacion, ec.descripcion, ec.visible, c.carrera,c.curso,c.tema from EntradaConocimiento ec 
 	inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
 	inner join EntradasAlumno as ea on ea.idEntrada = ec.idEntrada
-	where ea.carnet = @carnet;
+	inner join Vistas as v on v.idEntrada = ec.idEntrada
+	where ea.carnet = @carnet
+	group by ec.idEntrada,ec.titulo,ec.puntuacion,ec.descripcion,ec.visible,c.carrera,c.curso,c.tema
 END;
 GO
-
 
 --Buscar entradas de conocimiento
 CREATE OR ALTER PROCEDURE buscarEntradas (@carrera varchar (100), @curso varchar (100), @tema varchar(100),
@@ -117,26 +117,29 @@ BEGIN
 	--Busqueda por recientes
 	IF (@tipoBusqueda = 1)
 	Begin
-		select titulo, descripcion, vistas, (select count (*) from Comentarios where ec.idEntrada = idEntrada) cantidadComentarios, puntuacion,
+		select titulo, descripcion, (select sum(cantidadVistas) from Vistas where idEntrada = ec.idEntrada) as cantidadVistas, (select count (*) from Comentarios where ec.idEntrada = idEntrada) cantidadComentarios, puntuacion,
 		fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
 		inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
+		inner join Vistas as v on v.idEntrada = ec.idEntrada
 		where c.carrera = @carrera and c.curso = @curso and c.tema = @tema and visible = 1
-		group by ec.titulo,ec.descripcion,ec.vistas, idEntrada, puntuacion,fechaCreacion,ec.idEntrada
+		group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion,fechaCreacion,ec.idEntrada
 		order by ec.fechaCreacion desc;
 	End
 
 	--Busqueda por relevancia
 	Else If (@tipoBusqueda = 0)
 	Begin
-		select titulo, descripcion, vistas, (select count (*) from Comentarios as com where ec.idEntrada = com.idEntrada) cantidadComentarios, puntuacion,
+		select titulo, descripcion, (select sum(cantidadVistas) from Vistas where idEntrada = ec.idEntrada) as cantidadVistas, (select count (*) from Comentarios as com where ec.idEntrada = com.idEntrada) cantidadComentarios, puntuacion,
 		fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
 		inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
+		inner join Vistas as v on v.idEntrada = ec.idEntrada
 		where c.carrera = @carrera and c.curso = @curso and c.tema = @tema and visible = 1
-		group by ec.titulo,ec.descripcion,ec.vistas, idEntrada, puntuacion,fechaCreacion,ec.idEntrada
-		order by ec.puntuacion desc;
+		group by ec.titulo,ec.descripcion, puntuacion,fechaCreacion,ec.idEntrada
+		order by cantidadVistas desc;
 	End
 END;
 GO
+
 
 --Ver carreras
 CREATE OR ALTER PROCEDURE verCarreras
@@ -185,6 +188,7 @@ BEGIN
 END;
 GO
 
+
 --Ver comentarios y notas de la entrada de conocimiento *****SOLO SE VEN SI SE PUSO NOTA Y SE COMENTÓ**********
 CREATE OR ALTER PROCEDURE verReviewsEntrada ( @idEntrada int)
 AS
@@ -200,7 +204,7 @@ GO
 CREATE OR ALTER PROCEDURE agregarVista ( @idEntrada int)
 AS
 BEGIN
-	UPDATE EntradaConocimiento set vistas = vistas + 1 where idEntrada = @idEntrada;
+	UPDATE Vistas set cantidadVistas = cantidadVistas + 1 where idEntrada = @idEntrada;
 END;
 GO
 
@@ -228,6 +232,16 @@ begin
 end;
 go
 
+--Trigger para inicializar las vistas de una entrada en 0 despues de ser creada
+CREATE OR ALTER TRIGGER tr_vistasEntrada on EntradaConocimiento
+after insert
+as
+begin
+	declare @idEntrada int = (select idEntrada from inserted);
+	insert into Vistas (cantidadVistas,idEntrada) values (0,@idEntrada);
+end;
+go
+
 --****TRIGGERS****
 --**************************ALUMNO**************************
 
@@ -250,6 +264,7 @@ Begin
 INSERT INTO Catalogos (usuarioAdmin, carrera, curso, tema) values (@usuarioAdmin, @carrera, @curso, @tema);
 End;
 Go
+
 
 
 
