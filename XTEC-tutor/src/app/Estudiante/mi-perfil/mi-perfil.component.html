@@ -10,7 +10,7 @@
             <div class="d-flex flex-column align-items-center text-center">
               <img src="{{foto}}" alt="Admin" class="rounded-circle p-1 bg-danger" width="110">
               <button class="btn btn-danger" (click)="openFile()" style="margin-top: 2%">Cambiar imagen
-                <input type="file" style="display:none"  id="image"  name="name" accept=".png, .jpg .jpeg" #image (change)="setByteArray(image.files)">
+                <input type="file" style="display:none"  id="image"  name="name" accept="image/*" #image (change)="setByteArray(image.files)">
               </button>
               <div class="mt-3" style="color: #2B2D42">
                 <h2>{{this.fileService.getUser().primerNombre}} {{this.fileService.getUser().apellido}}</h2>

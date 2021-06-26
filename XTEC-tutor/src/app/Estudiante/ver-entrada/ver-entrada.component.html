@@ -2,15 +2,15 @@
 
 <div class="row">
   <div class="col-3 colIzquierda text-left">
-    <div style="margin-top: 2%; margin-left: 2%;">
+    <div style="margin-top: 2%; margin-left: 2%; color: #2B2D42">
       <h1><b>Descripción: </b>{{entrada.descripcion}}</h1>
       <h1><b>Puntuación: </b>{{entrada.puntuacion}}</h1>
       <h1><b>Vistas: </b>{{entrada.vistas}}</h1>
       <h1><b>Fecha de creación: </b>{{transformDate()}}</h1>
-
+      <button class="btn btn-outline-danger" (click)="openCentrado(comentarios)">Ver comentarios</button>
       <form>
         <div class="form-group">
-          <label for="nota">Mi nota seleccionada</label>
+          <label for="nota" style="margin-top: 15px">Mi nota seleccionada</label>
           <select class="form-control" id="nota">
             <option value="" selected disabled>Seleccione una nota para el artículo</option>
             <option>1</option>
@@ -49,6 +49,28 @@
     </div>
   </div>
 </div>
+
+<ng-template #comentarios let-modal>
+  <div class="modal-header">
+    <h1 class="modal-title" style="color: #2B2D42">Comentarios</h1>
+    <button class="close" aria-label="close" type="button" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="comment mt-4 text-justify float-left"> <img src="https://i.imgur.com/yTFUilP.jpg" alt="" class="rounded-circle commentImage" width="40" height="40">
+      <h4> <b>Autor: </b>    Jhon Doe    </h4> <span>  <b>Fecha: </b> 20 October, 2018      <b>Nota: </b> 7</span> <br>
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus numquam assumenda hic aliquam vero sequi velit molestias doloremque molestiae dicta?</p>
+    </div>
+
+
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss()">Cerrar</button>
+  </div>
+</ng-template>
+
 
 
 <app-footer></app-footer>

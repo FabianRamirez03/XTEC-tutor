@@ -3,6 +3,7 @@ import {DatePipe} from '@angular/common'
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {FileService} from "../../_service/file.service";
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-ver-entrada',
@@ -13,7 +14,7 @@ export class VerEntradaComponent implements OnInit {
   public id: any;
   public message: any;
   public entrada: any;
-  constructor(private route: ActivatedRoute, public fileService: FileService, private datepipe: DatePipe,) { }
+  constructor(private route: ActivatedRoute, public fileService: FileService, private datepipe: DatePipe, private modal:NgbModal) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
@@ -53,4 +54,10 @@ export class VerEntradaComponent implements OnInit {
     a.click();
     document.body.removeChild(a);
   }
+
+  // @ts-ignore
+  openCentrado(contenido){
+    this.modal.open(contenido,{centered:true});
+  }
+
 }
