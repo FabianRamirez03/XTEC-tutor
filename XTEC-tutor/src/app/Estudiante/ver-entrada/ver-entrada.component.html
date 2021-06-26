@@ -7,7 +7,7 @@
       <h1><b>Puntuación: </b>{{entrada.puntuacion}}</h1>
       <h1><b>Vistas: </b>{{entrada.vistas}}</h1>
       <h1><b>Fecha de creación: </b>{{transformDate()}}</h1>
-      <button class="btn btn-outline-danger" (click)="openCentrado(comentarios)">Ver comentarios</button>
+      <button class="btn btn-outline-danger" (click)="getComentarios(); openCentrado(comentarios)">Ver comentarios</button>
       <form>
         <div class="form-group">
           <label for="nota" style="margin-top: 15px">Mi nota seleccionada</label>
@@ -29,7 +29,7 @@
           <label for="comentario">Ingrese su comentario</label>
           <textarea class="form-control" id="comentario" rows="3"></textarea>
         </div>
-        <button type="submit" (click)="comentarEntrada()" class="btn btn-danger">Enviar evualación</button>
+        <button type="submit" (click)="comentarEntrada()" class="btn btn-danger">Enviar Evaluación</button>
       </form>
       <div *ngIf="entrada.existeArchivo" style="margin-top: 10px">
         <button type="button" class="btn btn-outline-danger" (click)="download()">Descargar archivo adjunto</button>
