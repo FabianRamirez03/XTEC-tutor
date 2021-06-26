@@ -112,6 +112,9 @@ export class FileService {
     return this.http.get(`${this.url}/Entrada/cambiarVisibilidad?idEntrada=${id}`)
   }
 
+  public getComentarios(id:string){
+    return this.http.get<any>(`${this.url}/Review/getReviews?idEntrada=${id}`)
+  }
 
 
 

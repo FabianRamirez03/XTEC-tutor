@@ -58,13 +58,12 @@
     </button>
   </div>
   <div class="modal-body">
-    <div class="comment mt-4 text-justify float-left"> <img src="https://i.imgur.com/yTFUilP.jpg" alt="" class="rounded-circle commentImage" width="40" height="40">
-      <h4> <b>Autor: </b>    Jhon Doe    </h4> <span>  <b>Fecha: </b> 20 October, 2018      <b>Nota: </b> 7</span> <br>
-      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Accusamus numquam assumenda hic aliquam vero sequi velit molestias doloremque molestiae dicta?</p>
+    <div *ngFor="let comentario of listaComentarios">
+      <div class="comment mt-4 text-justify float-left"> <img src="{{comentario.fotografia}}" alt="" class="rounded-circle commentImage" width="40" height="40">
+        <h4> <b>Autor: </b>    {{comentario.primerNombre}} {{comentario.apellido}}    </h4> <span>  <b>Fecha: </b> {{formatoFecha(comentario.fecha)}}      <b>Nota: </b> {{comentario.nota}}</span> <br>
+        <p>{{comentario.comentario}}</p>
+      </div>
     </div>
-
-
-
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-danger"  (click)="modal.dismiss()">Cerrar</button>
