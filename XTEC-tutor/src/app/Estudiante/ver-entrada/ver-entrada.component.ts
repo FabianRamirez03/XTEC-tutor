@@ -20,9 +20,7 @@ export class VerEntradaComponent implements OnInit {
     this.obtenerEntrada()
   }
   obtenerEntrada(){
-    this.fileService.obtenerEntrada(this.id).subscribe((resp:any)=>{
-      this.entrada = resp;
-    })
+    this.fileService.obtenerEntrada(this.id).subscribe((resp:any)=>{this.entrada = resp; console.log(resp)})
   }
   transformDate(){
      return this.datepipe.transform(this.entrada.fechaCreacion, 'dd/MM/yyyy');
