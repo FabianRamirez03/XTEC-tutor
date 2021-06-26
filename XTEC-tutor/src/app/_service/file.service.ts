@@ -59,6 +59,22 @@ export class FileService {
     }).subscribe(_=>{alert(`Catalogo de ${carrera} creado exitosamente`)});
   }
 
+  public comentarEntrada(comentario:string, nota:string, idEntrada:string){
+    this.http.post(`${this.url}/Review/comentarEntrada`,
+      {
+        carnet: this.getUser().carnet,
+        idEntrada: idEntrada,
+        comentario: comentario,
+      }).subscribe(_=>{alert(`Comentario Enviado Correctamente`)});
+    this.http.post(`${this.url}/Review/puntuarEntrada`,
+      {
+        carnet: this.getUser().carnet,
+        idEntrada: idEntrada,
+        nota: Number(nota),
+      }).subscribe(_=>console.log(`nota publicada ${Number(nota)}`))
+
+  }
+
   public editarPerfil(usuario:any){
     console.log(usuario);
     return this.http.post(`${this.url}/Users/editarPerfil`,usuario)

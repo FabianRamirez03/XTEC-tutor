@@ -58,6 +58,8 @@ export class CrearEntradaComponent implements OnInit {
     formData.append('tema', (document.getElementById('ListaTemas') as HTMLInputElement).value);
     formData.append('carnet', this.fileService.getUser().carnet);
     formData.append('visible', '1');
+    console.log(formData);
+    console.log(this.entrada.value.message);
     if (this.file !=  undefined){
       let fileToUpload = this.file;
       console.log(fileToUpload);

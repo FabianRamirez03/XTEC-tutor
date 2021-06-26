@@ -21,9 +21,7 @@ export class VerEntradaComponent implements OnInit {
     this.obtenerEntrada()
   }
   obtenerEntrada(){
-    this.fileService.obtenerEntrada(this.id).subscribe((resp:any)=>{
-      this.entrada = resp;
-    })
+    this.fileService.obtenerEntrada(this.id).subscribe((resp:any)=>{this.entrada = resp; console.log(resp)})
   }
   transformDate(){
      return this.datepipe.transform(this.entrada.fechaCreacion, 'dd/MM/yyyy');
@@ -53,6 +51,18 @@ export class VerEntradaComponent implements OnInit {
     a.target = '_blank';
     a.click();
     document.body.removeChild(a);
+  }
+
+  comentarEntrada(){
+    const comentario = (document.getElementById('comentario') as HTMLInputElement).value
+    const nota = (document.getElementById('nota') as HTMLInputElement).value
+    if (nota != ""){
+      this.fileService.comentarEntrada(comentario, nota, this.id);
+      console.log(comentario);
+    }
+    else{
+      alert("Ingrese una Puntuación")
+    }
   }
 
   // @ts-ignore

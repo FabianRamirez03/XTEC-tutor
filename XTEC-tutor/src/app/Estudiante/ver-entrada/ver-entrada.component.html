@@ -29,7 +29,7 @@
           <label for="comentario">Ingrese su comentario</label>
           <textarea class="form-control" id="comentario" rows="3"></textarea>
         </div>
-        <button type="submit" class="btn btn-danger">Enviar evualación</button>
+        <button type="submit" (click)="comentarEntrada()" class="btn btn-danger">Enviar evualación</button>
       </form>
       <div *ngIf="entrada.existeArchivo" style="margin-top: 10px">
         <button type="button" class="btn btn-outline-danger" (click)="download()">Descargar archivo adjunto</button>
