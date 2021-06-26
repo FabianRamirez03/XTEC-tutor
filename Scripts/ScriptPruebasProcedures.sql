@@ -83,13 +83,17 @@ select * from Comentarios
 select * from Catalogos
 select * from Alumno
 
-/*
+execute agregarAlumno @carnet = '2018086985',@contrasena = 'm',@primerNombre ='Mariana',@apellido ='Vargas',@correo = 'quieroSugar@gmail.com';
+execute agregarAlumno @carnet = '2018099304',@contrasena = 'w',@primerNombre ='Wajib',@apellido ='Zaglul',@correo = 'soylabomba420@hotmail.com';
+execute agregarAlumno @carnet = '2018099536',@contrasena = 'f',@primerNombre ='Fabian',@apellido ='Ramirez',@correo = 'BTSlover4ever@gmail.com';
+
 execute puntuarEntrada @carnet = '2018319178', @idEntrada = 5, @nota = 9;
 execute puntuarEntrada @carnet = '201868978', @idEntrada = 5, @nota = 6;
 execute puntuarEntrada @carnet = '201868978', @idEntrada = 7, @nota = 3;
 execute puntuarEntrada @carnet = '2018319178', @idEntrada = 7, @nota = 2;
 */
 select * from EntradaConocimiento
+select * from Alumno
 /*
 execute verReviewsEntrada @idEntrada = 7
 */

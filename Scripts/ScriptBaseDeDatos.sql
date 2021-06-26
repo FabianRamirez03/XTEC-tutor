@@ -55,10 +55,12 @@ Create table EntradasAlumno(
 Create table Comentarios (
 	idComentario int identity (1,1),
 	comentario varchar(max) not null,
+	fechaComentario datetime default getDate(),
 	carnetAlumno varchar(20) not null,
 	idEntrada int,
 	primary key (idComentario)
 );
+
 
 Create table ReviewsAlumnos (
 	carnet varchar(20) not null,
