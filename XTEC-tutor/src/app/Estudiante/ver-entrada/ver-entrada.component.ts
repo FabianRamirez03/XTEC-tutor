@@ -53,6 +53,18 @@ export class VerEntradaComponent implements OnInit {
     document.body.removeChild(a);
   }
 
+  comentarEntrada(){
+    const comentario = (document.getElementById('comentario') as HTMLInputElement).value
+    const nota = (document.getElementById('nota') as HTMLInputElement).value
+    if (nota != ""){
+      this.fileService.comentarEntrada(comentario, nota, this.id);
+      console.log(comentario);
+    }
+    else{
+      alert("Ingrese una Puntuación")
+    }
+  }
+
   // @ts-ignore
   openCentrado(contenido){
     this.modal.open(contenido,{centered:true});

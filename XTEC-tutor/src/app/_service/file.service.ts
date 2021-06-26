@@ -8,7 +8,7 @@ export class FileService {
   usuario: any = {};
   constructor(private http: HttpClient) { }
   public  url = "https://xtectutorapi.azurewebsites.net/api";
-  //public  url = "https://localhost:5001/api";
+  // public  url = "https://localhost:5001/api";
   public upload(formData: FormData) {
     return this.http.post(`${this.url}/file/upload`, formData, {
       reportProgress: true,
@@ -57,6 +57,22 @@ export class FileService {
             curso: curso,
             tema: tema
     }).subscribe(_=>{alert(`Catalogo de ${carrera} creado exitosamente`)});
+  }
+
+  public comentarEntrada(comentario:string, nota:string, idEntrada:string){
+    this.http.post(`${this.url}/Review/comentarEntrada`,
+      {
+        carnet: this.getUser().carnet,
+        idEntrada: idEntrada,
+        comentario: comentario,
+      }).subscribe(_=>{alert(`Comentario Enviado Correctamente`)});
+    this.http.post(`${this.url}/Review/puntuarEntrada`,
+      {
+        carnet: this.getUser().carnet,
+        idEntrada: idEntrada,
+        nota: Number(nota),
+      }).subscribe(_=>console.log(`nota publicada ${Number(nota)}`))
+
   }
 
   public editarPerfil(usuario:any){
