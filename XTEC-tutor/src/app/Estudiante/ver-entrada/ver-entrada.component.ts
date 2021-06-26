@@ -14,11 +14,13 @@ export class VerEntradaComponent implements OnInit {
   public id: any;
   public message: any;
   public entrada: any;
+  listaComentarios: any;
   constructor(private route: ActivatedRoute, public fileService: FileService, private datepipe: DatePipe, private modal:NgbModal) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
     this.obtenerEntrada()
+    this.getComentarios()
   }
   obtenerEntrada(){
     this.fileService.obtenerEntrada(this.id).subscribe((resp:any)=>{this.entrada = resp; console.log(resp)})
@@ -67,7 +69,16 @@ export class VerEntradaComponent implements OnInit {
 
   // @ts-ignore
   openCentrado(contenido){
-    this.modal.open(contenido,{centered:true});
+    this.modal.open(contenido,{centered: true, scrollable: true});
+  }
+
+  getComentarios(){
+    this.fileService.getComentarios(this.id).subscribe((res:any) => this.listaComentarios = res);
+  }
+
+  // @ts-ignore
+  formatoFecha(fecha){
+    return this.datepipe.transform(fecha, 'dd/MM/yyyy-hh:mma');
   }
 
 }
