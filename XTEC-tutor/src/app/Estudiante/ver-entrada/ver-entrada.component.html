@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="col-3 colIzquierda text-left">
-    <div style="margin-top: 5%; margin-left: 2%;">
+    <div style="margin-top: 2%; margin-left: 2%;">
       <h1><b>Descripción: </b>{{entrada.descripcion}}</h1>
       <h1><b>Puntuación: </b>{{entrada.puntuacion}}</h1>
       <h1><b>Vistas: </b>{{entrada.vistas}}</h1>
@@ -32,7 +32,10 @@
         <button type="submit" class="btn btn-danger">Enviar evualación</button>
       </form>
       <div *ngIf="entrada.existeArchivo" style="margin-top: 10px">
-        <button type="button" class="btn btn-outline-danger">Descargar archivo adjunto</button>
+        <button type="button" class="btn btn-outline-danger" (click)="download()">Descargar archivo adjunto</button>
+      </div>
+      <div *ngIf="entrada.carnet===fileService.getUser().carnet" style="margin-top: 10px">
+        <button type="button" class="btn btn-outline-info" style="margin-bottom: 10px">Modificar</button>
       </div>
 
     </div>
