@@ -73,5 +73,11 @@ export class MiPerfilComponent implements OnInit {
     document.querySelector('input').click()
   }
 
+  // @ts-ignore
+  cambiarVisibilidad(idEntrada){
+    this.fileService.cambiarVisibilidad(idEntrada).subscribe((res:any) => {
+      console.log('Entrada modificada');
+      this.ngOnInit()})
+  }
 
 }
