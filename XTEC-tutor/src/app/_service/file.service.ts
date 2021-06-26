@@ -92,6 +92,9 @@ export class FileService {
     window.localStorage.setItem("usuario", JSON.stringify(user));
   }
 
+  public cambiarVisibilidad(id:string){
+    return this.http.get(`${this.url}/Entrada/cambiarVisibilidad?idEntrada=${id}`)
+  }
 
 
 

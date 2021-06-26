@@ -101,7 +101,7 @@
                   <th scope="col">Vistas</th>
                   <th scope="col">Puntuación</th>
                   <th scope="col">Descripción</th>
-                  <th scope="col">Visible</th>
+                  <th scope="col">Visibilidad</th>
                   <th scope="col">Carrera</th>
                   <th scope="col">Curso</th>
                   <th scope="col">Tema</th>
@@ -113,7 +113,22 @@
                   <td>{{entrada.vistas}}</td>
                   <td>{{entrada.puntuacion}}</td>
                   <td>{{entrada.descripcion}}</td>
-                  <td>{{entrada.visible}}</td>
+                  <td>
+                    <div class="form-check">
+                      <div *ngIf="entrada.visible === true">
+                        <input class="form-check-input" type="checkbox" id="check1{{entrada.idEntrada}}" (change)="cambiarVisibilidad(entrada.idEntrada)" checked>
+                        <label class="form-check-label" for="check1{{entrada.idEntrada}}">
+                          Visible
+                        </label>
+                      </div>
+                      <div *ngIf="entrada.visible === false">
+                        <input class="form-check-input" type="checkbox" id="check0{{entrada.idEntrada}}" (change)="cambiarVisibilidad(entrada.idEntrada)">
+                        <label class="form-check-label" for="check0{{entrada.idEntrada}}">
+                          No visible
+                        </label>
+                      </div>
+                    </div>
+                  </td>
                   <td>{{entrada.carrera}}</td>
                   <td>{{entrada.curso}}</td>
                   <td>{{entrada.tema}}</td>
