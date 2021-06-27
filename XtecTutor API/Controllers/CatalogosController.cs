@@ -39,40 +39,50 @@ namespace XtecTutorAPI.Controllers
         public List<Object> getCursos([FromQuery] string carrera)
         {
             List<Object> cursos = new List<Object>();
-            SqlConnection conn = new SqlConnection(serverKey);
-            conn.Open();
-            SqlCommand cmd;
-            string insertQuery = "verCursos";
-            cmd = new SqlCommand(insertQuery, conn);
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@carrera", carrera);
-            SqlDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                var car = new { curso = dr[0].ToString() };
-                cursos.Add(car);
+            try {
+                SqlConnection conn = new SqlConnection(serverKey);
+                conn.Open();
+                SqlCommand cmd;
+                string insertQuery = "verCursos";
+                cmd = new SqlCommand(insertQuery, conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@carrera", carrera);
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    var car = new { curso = dr[0].ToString() };
+                    cursos.Add(car);
+                }
             }
+            catch (Exception ex){ }
             return cursos;
-        }
+        } 
 
         [HttpGet]
         [Route("getTemas")]
         public List<Object> getTemas([FromQuery] string curso)
         {
             List<Object> temas = new List<Object>();
-            SqlConnection conn = new SqlConnection(serverKey);
-            conn.Open();
-            SqlCommand cmd;
-            string insertQuery = "verTemas";
-            cmd = new SqlCommand(insertQuery, conn);
-            cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@curso", curso);
-            SqlDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
+            try
             {
-                var car = new { tema = dr[0].ToString() };
-                temas.Add(car);
+                SqlConnection conn = new SqlConnection(serverKey);
+                conn.Open();
+                SqlCommand cmd;
+                string insertQuery = "verTemas";
+                cmd = new SqlCommand(insertQuery, conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@curso", curso);
+                SqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    var car = new { tema = dr[0].ToString() };
+                    temas.Add(car);
+                }
             }
+            catch(Exception ex)
+            {}
+           
+            
             return temas;
         }
 

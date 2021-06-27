@@ -25,12 +25,33 @@ namespace XtecTutorAPI.Controllers
         {
             try
             {
-                var file = Request.Form.Files[0];
-                var folderName = Path.Combine("Resources");
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                var x = Request.Form; 
+                
 
-                if (file.Length > 0)
+                var dict = Request.Form.ToDictionary(x => x.Key, x => x.Value.ToString());
+
+                SqlConnection conn = new SqlConnection(serverKey);
+                conn.Open();
+                string insertQuery = "crearEntradaConocimiento";
+                SqlCommand cmd = new SqlCommand(insertQuery, conn);
+
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@descripcion", dict["descripcion"]);
+                cmd.Parameters.AddWithValue("@carnet", dict["carnet"]);
+                cmd.Parameters.AddWithValue("@titulo", dict["titulo"]);
+                cmd.Parameters.AddWithValue("@cuerpoArticulo", dict["cuerpoArticulo"]);
+                cmd.Parameters.AddWithValue("@visible", 1);
+                cmd.Parameters.AddWithValue("@carrera", dict["carrera"]);
+                cmd.Parameters.AddWithValue("@curso", dict["curso"]);
+                cmd.Parameters.AddWithValue("@tema", dict["tema"]);
+
+
+
+                try
                 {
+                    var file = Request.Form.Files[0];
+                    var folderName = Path.Combine("Resources");
+                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
                     var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                     var fullPath = Path.Combine(pathToSave, fileName);
                     var dbPath = Path.Combine(folderName, fileName);
@@ -39,35 +60,90 @@ namespace XtecTutorAPI.Controllers
                         file.CopyTo(ms);
                         var fileBytes = ms.ToArray();
                         string base64File = Convert.ToBase64String(fileBytes);
-
-                        SqlConnection conn = new SqlConnection(serverKey);
-                        conn.Open();
-                        string insertQuery = "crearEntradaConocimiento";
-                        SqlCommand cmd = new SqlCommand(insertQuery, conn);
-
-                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@descripcion", "descripcion de prueba");
-                        cmd.Parameters.AddWithValue("@carnet", "2018319178");
-                        cmd.Parameters.AddWithValue("@titulo", "Prueba de que sirva");
-                        cmd.Parameters.AddWithValue("@cuerpoArticulo", "Hola! Este articulo esta funcionando, creo");
-                        cmd.Parameters.AddWithValue("@visible", 1);
                         cmd.Parameters.AddWithValue("@nombreArchivo", fileName);
                         cmd.Parameters.AddWithValue("@extension", ".pdf");
                         cmd.Parameters.AddWithValue("@archivo", base64File);
-                        cmd.Parameters.AddWithValue("@carrera", "computadores");
-                        cmd.Parameters.AddWithValue("@curso", "intro y taller");
-                        cmd.Parameters.AddWithValue("@tema", "recursividad");
                         cmd.ExecuteNonQuery();
                         conn.Close();
-
 
                         return Ok(new { dbPath });
                     }
 
                 }
-                else
+            catch (Exception ex)
+            {
+                    cmd.Parameters.AddWithValue("@nombreArchivo", "");
+                    cmd.Parameters.AddWithValue("@extension", "");
+                    cmd.Parameters.AddWithValue("@archivo", "");
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    return Ok();
+                }
+            }
+            catch (Exception ex)
+            {
+           return StatusCode(500, $"Internal server error: {ex}");}
+
+        }
+
+        [HttpPost, DisableRequestSizeLimit]
+        [Route("editarEntrada")]
+        public IActionResult editarEntrada()
+        {
+            try
+            {
+                var x = Request.Form;
+
+
+                var dict = Request.Form.ToDictionary(x => x.Key, x => x.Value.ToString());
+
+                SqlConnection conn = new SqlConnection(serverKey);
+                conn.Open();
+                string insertQuery = "EditarEntradaConocimiento";
+                SqlCommand cmd = new SqlCommand(insertQuery, conn);
+
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@descripcion", dict["descripcion"]);
+                cmd.Parameters.AddWithValue("@idEntrada", dict["idEntrada"]);
+                cmd.Parameters.AddWithValue("@titulo", dict["titulo"]);
+                cmd.Parameters.AddWithValue("@cuerpoArticulo", dict["cuerpoArticulo"]);
+                cmd.Parameters.AddWithValue("@carrera", dict["carrera"]);
+                cmd.Parameters.AddWithValue("@curso", dict["curso"]);
+                cmd.Parameters.AddWithValue("@tema", dict["tema"]);
+
+
+
+                try
                 {
-                    return BadRequest();
+                    var file = Request.Form.Files[0];
+                    var folderName = Path.Combine("Resources");
+                    var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var dbPath = Path.Combine(folderName, fileName);
+                    using (var ms = new MemoryStream())
+                    {
+                        file.CopyTo(ms);
+                        var fileBytes = ms.ToArray();
+                        string base64File = Convert.ToBase64String(fileBytes);
+                        cmd.Parameters.AddWithValue("@nombreArchivo", fileName);
+                        cmd.Parameters.AddWithValue("@extension", ".pdf");
+                        cmd.Parameters.AddWithValue("@archivo", base64File);
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+
+                        return Ok(new { dbPath });
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    cmd.Parameters.AddWithValue("@nombreArchivo", "");
+                    cmd.Parameters.AddWithValue("@extension", "");
+                    cmd.Parameters.AddWithValue("@archivo", "");
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    return Ok();
                 }
             }
             catch (Exception ex)

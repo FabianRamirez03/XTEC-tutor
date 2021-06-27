@@ -51,5 +51,27 @@ namespace XtecTutorAPI.Controllers
 
             return usuario;
         }
+
+        [HttpPost]
+        [Route("editarPerfil")]
+        public Usuario editarPerfil(Usuario usuario)
+        {
+            SqlConnection conn = new SqlConnection(serverKey);
+            conn.Open();
+            SqlCommand cmd;
+            string insertQuery = "editarPerfil";
+            cmd = new SqlCommand(insertQuery, conn);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@carnet", usuario.carnet);
+            cmd.Parameters.AddWithValue("@contrasena", usuario.password);
+            cmd.Parameters.AddWithValue("@correo", usuario.correo);
+            cmd.Parameters.AddWithValue("@primerNombre", usuario.primerNombre);
+            cmd.Parameters.AddWithValue("@apellido", usuario.apellido);
+            cmd.Parameters.AddWithValue("@descripcion", usuario.descripcion);
+            cmd.Parameters.AddWithValue("@telefono", usuario.telefono);
+            cmd.Parameters.AddWithValue("@fotografia", usuario.fotografia);
+            cmd.ExecuteNonQuery();
+            return usuario;
+        }
     }
 }
