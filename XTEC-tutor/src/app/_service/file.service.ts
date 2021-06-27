@@ -8,7 +8,7 @@ export class FileService {
   usuario: any = {};
   constructor(private http: HttpClient) { }
   public  url = "https://xtectutorapi.azurewebsites.net/api";
-  // public  url = "https://localhost:5001/api";
+  //public  url = "https://localhost:5001/api";
 
   public upload(formData: FormData, nuevo: boolean) {
     if (nuevo){
