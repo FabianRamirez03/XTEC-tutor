@@ -87,6 +87,26 @@ BEGIN
 END;
 GO
 
+--Editar entrada de conocimiento
+	CREATE OR ALTER PROCEDURE EditarEntradaConocimiento  @idEntrada int, @titulo varchar (100), @cuerpoArticulo varchar(max),
+	@descripcion varchar (max), @nombreArchivo varchar (100), @extension varchar (100), @archivo varchar(max),
+	@carrera varchar (100), @curso varchar(100), @tema varchar(100)
+AS
+BEGIN
+	Declare @idCatalogo int = (select idCatalogo  from Catalogos where Carrera = @carrera and Curso = @curso and tema = @tema);
+	If (@archivo = '')
+	BEGIN
+		Update EntradaConocimiento set titulo = @titulo, cuerpoArticulo = @cuerpoArticulo, descripcion = @descripcion, idCatalogo = @idCatalogo, fechaCreacion = getDate()
+		where idEntrada = @idEntrada;	
+	END;
+	ELSE
+	BEGIN
+		Update EntradaConocimiento set titulo = @titulo, cuerpoArticulo = @cuerpoArticulo, descripcion = @descripcion, nombreArchivo = @nombreArchivo, extension = @extension, archivo = @archivo, idCatalogo = @idCatalogo, fechaCreacion = getDate()
+		where idEntrada = @idEntrada;	
+	END;
+END;
+GO
+
 --Obtiene todos los datos de la entrada de conocimiento e indica si existe un archivo en esta
 CREATE OR ALTER PROCEDURE obtenerEntrada @idEntrada int
 AS
@@ -107,7 +127,6 @@ BEGIN
 	where ec.idEntrada = @idEntrada;
 END;
 GO
-
 
 --Obtiene el archivo de una entrada en especifico
 CREATE OR ALTER PROCEDURE descargarArchivo @idEntrada int
@@ -138,6 +157,7 @@ BEGIN
 END;
 GO
 
+
 --Buscar entradas de conocimiento
 CREATE OR ALTER PROCEDURE buscarEntradas (@carrera varchar (100), @curso varchar (100), @tema varchar(100),
 @tipoBusqueda bit)
@@ -149,85 +169,85 @@ BEGIN
 		IF @carrera = '' and @curso = '' and @tema = ''
 		BEGIN
 			select titulo, descripcion, (select sum(cantidadVistas) from Vistas where idEntrada = ec.idEntrada) as cantidadVistas, (select count (*) from Comentarios where ec.idEntrada = idEntrada) cantidadComentarios, puntuacion,
-			fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
+			fechaCreacion, ec.idEntrada, ec.relevancia from EntradaConocimiento as ec
 			inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
 			inner join Vistas as v on v.idEntrada = ec.idEntrada
 			where visible = 1
-			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion,fechaCreacion,ec.idEntrada order by ec.fechaCreacion desc;
+			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion, fechaCreacion, ec.idEntrada, ec.relevancia order by ec.fechaCreacion desc;
 		END;
 
 		ELSE IF @curso = '' and @tema = ''
 		BEGIN
 			select titulo, descripcion, (select sum(cantidadVistas) from Vistas where idEntrada = ec.idEntrada) as cantidadVistas, (select count (*) from Comentarios where ec.idEntrada = idEntrada) cantidadComentarios, puntuacion,
-			fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
+			fechaCreacion, ec.idEntrada, ec.relevancia from EntradaConocimiento as ec
 			inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
 			inner join Vistas as v on v.idEntrada = ec.idEntrada
 			where c.carrera = @carrera and visible = 1
-			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion,fechaCreacion,ec.idEntrada order by ec.fechaCreacion desc;
+			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion, fechaCreacion, ec.idEntrada, ec.relevancia order by ec.fechaCreacion desc;
 		END;
 
 		ELSE IF @tema = ''
 		BEGIN
 			select titulo, descripcion, (select sum(cantidadVistas) from Vistas where idEntrada = ec.idEntrada) as cantidadVistas, (select count (*) from Comentarios where ec.idEntrada = idEntrada) cantidadComentarios, puntuacion,
-			fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
+			fechaCreacion, ec.idEntrada, ec.relevancia from EntradaConocimiento as ec
 			inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
 			inner join Vistas as v on v.idEntrada = ec.idEntrada
 			where c.carrera = @carrera and c.curso = @curso and visible = 1
-			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion,fechaCreacion,ec.idEntrada order by ec.fechaCreacion desc;
+			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion, fechaCreacion, ec.idEntrada, ec.relevancia order by ec.fechaCreacion desc;
 		END;
 
 		ELSE
 		BEGIN
 			select titulo, descripcion, (select sum(cantidadVistas) from Vistas where idEntrada = ec.idEntrada) as cantidadVistas, (select count (*) from Comentarios where ec.idEntrada = idEntrada) cantidadComentarios, puntuacion,
-			fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
+			fechaCreacion, ec.idEntrada, ec.relevancia from EntradaConocimiento as ec
 			inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
 			inner join Vistas as v on v.idEntrada = ec.idEntrada
 			where c.carrera = @carrera and c.curso = @curso and c.tema = @tema and visible = 1
-			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion,fechaCreacion,ec.idEntrada order by ec.fechaCreacion desc;
+			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion, fechaCreacion, ec.idEntrada, ec.relevancia order by ec.fechaCreacion desc;
 		END;
 	End;
-
+	
 	--Busqueda por relevancia
 	Else If (@tipoBusqueda = 0)
 	Begin
 			IF @carrera = '' and @curso = '' and @tema = ''
 		BEGIN
 			select titulo, descripcion, (select sum(cantidadVistas) from Vistas where idEntrada = ec.idEntrada) as cantidadVistas, (select count (*) from Comentarios where ec.idEntrada = idEntrada) cantidadComentarios, puntuacion,
-			fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
+			fechaCreacion, ec.idEntrada, ec.relevancia from EntradaConocimiento as ec
 			inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
 			inner join Vistas as v on v.idEntrada = ec.idEntrada
 			where visible = 1
-			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion,fechaCreacion,ec.idEntrada order by cantidadVistas desc;
+			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion, fechaCreacion, ec.idEntrada, ec.relevancia order by relevancia desc;
 		END;
 
 		ELSE IF @curso = '' and @tema = ''
 		BEGIN
 			select titulo, descripcion, (select sum(cantidadVistas) from Vistas where idEntrada = ec.idEntrada) as cantidadVistas, (select count (*) from Comentarios where ec.idEntrada = idEntrada) cantidadComentarios, puntuacion,
-			fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
+			fechaCreacion, ec.idEntrada, ec.relevancia from EntradaConocimiento as ec
 			inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
 			inner join Vistas as v on v.idEntrada = ec.idEntrada
 			where c.carrera = @carrera and visible = 1
-			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion,fechaCreacion,ec.idEntrada order by cantidadVistas desc;
+			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion, fechaCreacion, ec.idEntrada, ec.relevancia order by relevancia desc;
 		END;
 
 		ELSE IF @tema = ''
 		BEGIN
 			select titulo, descripcion, (select sum(cantidadVistas) from Vistas where idEntrada = ec.idEntrada) as cantidadVistas, (select count (*) from Comentarios where ec.idEntrada = idEntrada) cantidadComentarios, puntuacion,
-			fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
+			fechaCreacion, ec.idEntrada, ec.relevancia from EntradaConocimiento as ec
 			inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
 			inner join Vistas as v on v.idEntrada = ec.idEntrada
 			where c.carrera = @carrera and c.curso = @curso and visible = 1
-			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion,fechaCreacion,ec.idEntrada order by cantidadVistas desc;
+			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion,fechaCreacion,ec.idEntrada,ec.relevancia order by relevancia desc;
 		END;
 
 		ELSE
 		BEGIN
 			select titulo, descripcion, (select sum(cantidadVistas) from Vistas where idEntrada = ec.idEntrada) as cantidadVistas, (select count (*) from Comentarios where ec.idEntrada = idEntrada) cantidadComentarios, puntuacion,
-			fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
+			fechaCreacion, ec.idEntrada, ec.relevancia from EntradaConocimiento as ec
 			inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
 			inner join Vistas as v on v.idEntrada = ec.idEntrada
 			where c.carrera = @carrera and c.curso = @curso and c.tema = @tema and visible = 1
-			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion,fechaCreacion,ec.idEntrada order by cantidadVistas desc;
+			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion,fechaCreacion,ec.idEntrada,ec.relevancia order by relevancia desc;
 		END;
 	END;
 END;
@@ -295,7 +315,6 @@ END;
 GO
 
 
-
 --Aumenta las vistas de una entrada de conocimiento en 1
 CREATE OR ALTER PROCEDURE agregarVista (@idEntrada int)
 AS
@@ -346,6 +365,87 @@ begin
 end;
 go
 
+
+--Trigger para actualizar el indice de relevancia si se actualizan las vistas de alguna entrada
+CREATE OR ALTER TRIGGER tr_relevanciaVistas on Vistas
+after insert, update
+as
+begin
+	declare @idEntrada int = (select idEntrada from inserted);
+	declare @views12Meses int = (select sum (cantidadVistas)  from Vistas where idEntrada = @idEntrada and (DATEDIFF(MONTH,fechaVista,GETDATE()) <= 12));
+	declare @views6Meses int = (select sum (cantidadVistas)  from Vistas where idEntrada = @idEntrada and (DATEDIFF(MONTH,fechaVista,GETDATE()) <= 6));
+	declare @cantComentarios int = (select count (comentario) from Comentarios where idEntrada = @idEntrada);
+	declare @relevancia int = 0;
+
+	select @relevancia;
+	
+	--Views en los ultimos 6 meses
+	IF (@views6Meses != 0)BEGIN
+		IF (@views6Meses >= 1 and @views6Meses < 5) BEGIN
+			set @relevancia = @relevancia + 5;
+		END;
+		ELSE IF (@views6Meses >= 5 and @views6Meses < 10) BEGIN
+			set @relevancia = @relevancia + 10;
+		END;
+		ELSE IF (@views6Meses >= 10 and @views6Meses < 20) BEGIN
+			set @relevancia = @relevancia + 15;
+		END;
+		ELSE IF (@views6Meses >= 20 and @views6Meses < 30) BEGIN
+			set @relevancia = @relevancia + 20;
+		END;
+		ELSE IF (@views6Meses >= 30 and @views6Meses < 50) BEGIN
+			set @relevancia = @relevancia + 25;
+		END;
+		ELSE IF (@views6Meses >= 50) BEGIN
+			set @relevancia = @relevancia + 30;
+		END;
+	END;
+	
+	select @relevancia;
+	
+	--Views en los ultimos 12 meses
+	IF (@views12Meses != 0)BEGIN
+		IF (@views12Meses >= 1 and @views12Meses < 10) BEGIN
+			set @relevancia = @relevancia + 5;
+		END;
+		ELSE IF (@views12Meses >= 10 and @views12Meses < 50) BEGIN
+			set @relevancia = @relevancia + 10;
+		END;
+		ELSE IF (@views12Meses >= 50 and @views12Meses < 100) BEGIN
+			set @relevancia = @relevancia + 15;
+		END;
+		ELSE IF (@views12Meses >= 100) BEGIN
+			set @relevancia = @relevancia + 20;
+		END;
+	END;
+
+	select @relevancia;
+
+	--Cantidad de comentarios
+	IF (@cantComentarios != 0) BEGIN
+		IF(@cantComentarios >= 1 and @cantComentarios < 5)BEGIN
+			set @relevancia = @relevancia + 5;
+		END;
+		ELSE IF(@cantComentarios >= 5 and @cantComentarios < 10)BEGIN
+			set @relevancia = @relevancia + 10;
+		END;
+		ELSE IF(@cantComentarios >= 10 and @cantComentarios < 50)BEGIN
+			set @relevancia = @relevancia + 15;
+		END;
+		ELSE IF(@cantComentarios >= 50)BEGIN
+			set @relevancia = @relevancia + 20;
+		END;
+	END;
+
+	select @relevancia;
+
+	set @relevancia = @relevancia + (select puntuacion from EntradaConocimiento where idEntrada = @idEntrada) * 3;
+
+	select @relevancia;
+
+	update EntradaConocimiento set relevancia = @relevancia where idEntrada = @idEntrada;
+End;
+Go
 --****TRIGGERS****
 --**************************ALUMNO**************************
 

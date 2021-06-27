@@ -29,34 +29,20 @@ execute crearCatalogo @usuarioAdmin = 'admin', @carrera = 'computadores', @curso
 */
 
 /*
-execute crearEntradaConocimiento @carnet = '2018319178', @titulo = 'Titulo de prueba 4', @cuerpoArticulo = 'Cuerpo de prueba 4',
+execute crearEntradaConocimiento @carnet = '2018086985', @titulo = 'Carrera sin curso', @cuerpoArticulo = 'Cuerpo de prueba 4',
 @descripcion = 'Descripcion de prueba 4', @visible = 1, @nombreArchivo = 'nombre de prueba 4',
-@extension = '.png', @archivo = 'aqui iria el archivo', @carrera = 'Carrera de prueba',
-@curso = 'Curso de prueba' , @tema = 'tema de prueba'
+@extension = '.png', @archivo = 'aqui iria el archivo', @carrera = 'Escuela de Matemática',
+@curso = '' , @tema = '';
 
-execute crearEntradaConocimiento @carnet = '2018319178', @titulo = 'articulo sin curso ni tema', @cuerpoArticulo = 'Cuerpo de prueba',
-@descripcion = 'Descripcion de prueba', @visible = 1, @nombreArchivo = 'nombre de prueba',
-@extension = '.png', @archivo = 'aqui iria el archivo', @carrera = 'computadores',
-@curso = '' , @tema = ''
+execute crearEntradaConocimiento @carnet = '2018099304', @titulo = 'Curso sin tema', @cuerpoArticulo = 'Cuerpo de prueba 5',
+@descripcion = 'Descripcion de prueba 5', @visible = 1, @nombreArchivo = 'nombre de prueba 5',
+@extension = '.png', @archivo = 'aqui iria el archivo', @carrera = 'Escuela de Matemática',
+@curso = 'Matemática General' , @tema = '';
 
-execute crearEntradaConocimiento @carnet = '2018319178', @titulo = 'articulo sin tema', @cuerpoArticulo = 'Cuerpo de prueba',
-@descripcion = 'Descripcion de prueba', @visible = 1, @nombreArchivo = 'nombre de prueba',
-@extension = '.png', @archivo = 'aqui iria el archivo', @carrera = 'computadores',
-@curso = 'intro y taller' , @tema = ''
-
-execute crearEntradaConocimiento @carnet = '2018319178', @titulo = 'Titulo de prueba 4', @cuerpoArticulo = '',
-@descripcion = 'Descripcion de prueba 4', @visible = 1, @nombreArchivo = '',
-@extension = '', @archivo = '', @carrera = 'Carrera de prueba',
-@curso = 'Curso de prueba' , @tema = 'tema de prueba'
-
-execute crearEntradaConocimiento @carnet = '201868978', @titulo = 'prueba para vistas 3', @cuerpoArticulo = 'asdjkfga',
-@descripcion = 'Descripcion de prueba', @visible = 1, @nombreArchivo = 'no tiene',
-@extension = '', @archivo = '', @carrera = 'computadores',
-@curso = 'intro y taller' , @tema = 'recursividad'
 
 */
 select * from EntradaConocimiento
-select * from Alumno
+select * from Catalogos
 /*
 execute verEntradasAlumno @carnet = '2018319178'
 */
@@ -78,24 +64,119 @@ execute comentarEntrada @carnet = '2018319178' ,@idEntrada = 7, @comentario = 'Q
 execute comentarEntrada @carnet = '201868978' ,@idEntrada = 7, @comentario = 'Podria mejorar'
 */
 select * from EntradaConocimiento
-select * from ReviewsAlumnos
+select * from Catalogos
 select * from Comentarios
 select * from Catalogos
 select * from Alumno
 
-execute agregarAlumno @carnet = '2018086985',@contrasena = 'm',@primerNombre ='Mariana',@apellido ='Vargas',@correo = 'quieroSugar@gmail.com';
-execute agregarAlumno @carnet = '2018099304',@contrasena = 'w',@primerNombre ='Wajib',@apellido ='Zaglul',@correo = 'soylabomba420@hotmail.com';
-execute agregarAlumno @carnet = '2018099536',@contrasena = 'f',@primerNombre ='Fabian',@apellido ='Ramirez',@correo = 'BTSlover4ever@gmail.com';
+execute agregarAlumno @carnet = '2018086985',@contrasena = 'm',@primerNombre ='Mariana',@apellido ='Vargas',@correo = 'marianaVargas@gmail.com';
+execute agregarAlumno @carnet = '2018099304',@contrasena = 'w',@primerNombre ='Wajib',@apellido ='Zaglul',@correo = 'WZaglul@hotmail.com';
+execute agregarAlumno @carnet = '2018099536',@contrasena = 'f',@primerNombre ='Fabian',@apellido ='Ramirez',@correo = 'FRamirez@gmail.com';
 
 execute puntuarEntrada @carnet = '2018319178', @idEntrada = 5, @nota = 9;
 execute puntuarEntrada @carnet = '201868978', @idEntrada = 5, @nota = 6;
 execute puntuarEntrada @carnet = '201868978', @idEntrada = 7, @nota = 3;
 execute puntuarEntrada @carnet = '2018319178', @idEntrada = 7, @nota = 2;
 */
-select * from EntradaConocimiento
-select * from Alumno
+
 /*
 execute verReviewsEntrada @idEntrada = 7
 */
 execute verEntradasAlumno @carnet = '2018319178'
-select * from EntradaConocimiento
+select * from Catalogos
+
+/*
+CREATE OR ALTER PROCEDURE buscarEntradas (@carrera varchar (100), @curso varchar (100), @tema varchar(100),
+@tipoBusqueda bit)
+AS
+BEGIN
+	--Busqueda por recientes
+	IF (@tipoBusqueda = 1)
+	Begin
+		IF @carrera = '' and @curso = '' and @tema = ''
+		BEGIN
+			select titulo, descripcion, (select sum(cantidadVistas) from Vistas where idEntrada = ec.idEntrada) as cantidadVistas, (select count (*) from Comentarios where ec.idEntrada = idEntrada) cantidadComentarios, puntuacion,
+			fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
+			inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
+			inner join Vistas as v on v.idEntrada = ec.idEntrada
+			where visible = 1
+			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion,fechaCreacion,ec.idEntrada order by ec.fechaCreacion desc;
+		END;
+
+		ELSE IF @curso = '' and @tema = ''
+		BEGIN
+			select titulo, descripcion, (select sum(cantidadVistas) from Vistas where idEntrada = ec.idEntrada) as cantidadVistas, (select count (*) from Comentarios where ec.idEntrada = idEntrada) cantidadComentarios, puntuacion,
+			fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
+			inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
+			inner join Vistas as v on v.idEntrada = ec.idEntrada
+			where c.carrera = @carrera and visible = 1
+			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion,fechaCreacion,ec.idEntrada order by ec.fechaCreacion desc;
+		END;
+
+		ELSE IF @tema = ''
+		BEGIN
+			select titulo, descripcion, (select sum(cantidadVistas) from Vistas where idEntrada = ec.idEntrada) as cantidadVistas, (select count (*) from Comentarios where ec.idEntrada = idEntrada) cantidadComentarios, puntuacion,
+			fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
+			inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
+			inner join Vistas as v on v.idEntrada = ec.idEntrada
+			where c.carrera = @carrera and c.curso = @curso and visible = 1
+			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion,fechaCreacion,ec.idEntrada order by ec.fechaCreacion desc;
+		END;
+
+		ELSE
+		BEGIN
+			select titulo, descripcion, (select sum(cantidadVistas) from Vistas where idEntrada = ec.idEntrada) as cantidadVistas, (select count (*) from Comentarios where ec.idEntrada = idEntrada) cantidadComentarios, puntuacion,
+			fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
+			inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
+			inner join Vistas as v on v.idEntrada = ec.idEntrada
+			where c.carrera = @carrera and c.curso = @curso and c.tema = @tema and visible = 1
+			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion,fechaCreacion,ec.idEntrada order by ec.fechaCreacion desc;
+		END;
+	End;
+
+	--Busqueda por relevancia
+	Else If (@tipoBusqueda = 0)
+	Begin
+			IF @carrera = '' and @curso = '' and @tema = ''
+		BEGIN
+			select titulo, descripcion, (select sum(cantidadVistas) from Vistas where idEntrada = ec.idEntrada) as cantidadVistas, (select count (*) from Comentarios where ec.idEntrada = idEntrada) cantidadComentarios, puntuacion,
+			fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
+			inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
+			inner join Vistas as v on v.idEntrada = ec.idEntrada
+			where visible = 1
+			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion,fechaCreacion,ec.idEntrada order by cantidadVistas desc;
+		END;
+
+		ELSE IF @curso = '' and @tema = ''
+		BEGIN
+			select titulo, descripcion, (select sum(cantidadVistas) from Vistas where idEntrada = ec.idEntrada) as cantidadVistas, (select count (*) from Comentarios where ec.idEntrada = idEntrada) cantidadComentarios, puntuacion,
+			fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
+			inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
+			inner join Vistas as v on v.idEntrada = ec.idEntrada
+			where c.carrera = @carrera and visible = 1
+			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion,fechaCreacion,ec.idEntrada order by cantidadVistas desc;
+		END;
+
+		ELSE IF @tema = ''
+		BEGIN
+			select titulo, descripcion, (select sum(cantidadVistas) from Vistas where idEntrada = ec.idEntrada) as cantidadVistas, (select count (*) from Comentarios where ec.idEntrada = idEntrada) cantidadComentarios, puntuacion,
+			fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
+			inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
+			inner join Vistas as v on v.idEntrada = ec.idEntrada
+			where c.carrera = @carrera and c.curso = @curso and visible = 1
+			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion,fechaCreacion,ec.idEntrada order by cantidadVistas desc;
+		END;
+
+		ELSE
+		BEGIN
+			select titulo, descripcion, (select sum(cantidadVistas) from Vistas where idEntrada = ec.idEntrada) as cantidadVistas, (select count (*) from Comentarios where ec.idEntrada = idEntrada) cantidadComentarios, puntuacion,
+			fechaCreacion, ec.idEntrada from EntradaConocimiento as ec
+			inner join Catalogos as c on c.idCatalogo = ec.idCatalogo
+			inner join Vistas as v on v.idEntrada = ec.idEntrada
+			where c.carrera = @carrera and c.curso = @curso and c.tema = @tema and visible = 1
+			group by ec.titulo,ec.descripcion, ec.idEntrada, puntuacion,fechaCreacion,ec.idEntrada order by cantidadVistas desc;
+		END;
+	END;
+END;
+GO
+*/

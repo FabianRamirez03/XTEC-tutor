@@ -32,6 +32,7 @@ Create table EntradaConocimiento (
 	extension varchar (100),
 	archivo varchar (max),
 	fechaCreacion date default getDate(),
+	relevancia int default 0,
 	primary key (idEntrada)
 );
 
