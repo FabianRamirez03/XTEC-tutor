@@ -1,25 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { async, inject, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
+import {FileService} from "../_service/file.service";
 import { UploadComponent } from './upload.component';
 
 describe('UploadComponent', () => {
-  let component: UploadComponent;
-  let fixture: ComponentFixture<UploadComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UploadComponent ]
+      imports: [HttpClientModule ],
+      providers: [FileService]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(UploadComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  it('Servicio creado', inject([FileService], (service: FileService) => {
+    expect(service).toBeTruthy();
+  }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+
 });

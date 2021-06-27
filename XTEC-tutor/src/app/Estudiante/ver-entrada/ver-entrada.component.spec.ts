@@ -1,25 +1,36 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, inject, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
+import {FileService} from "../../_service/file.service";
 
 import { VerEntradaComponent } from './ver-entrada.component';
 
 describe('VerEntradaComponent', () => {
-  let component: VerEntradaComponent;
-  let fixture: ComponentFixture<VerEntradaComponent>;
+
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ VerEntradaComponent ]
+      imports: [HttpClientModule ],
+      providers: [FileService]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(VerEntradaComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  it('Servicio creado', inject([FileService], (service: FileService) => {
+    expect(service).toBeTruthy();
+  }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  it ('Conseguir la información de la entrada', async(() => {
+    const service: FileService = TestBed.get(FileService);
+    service.obtenerEntrada('69').subscribe(resp => {
+      expect(resp).toBeDefined();
+    });
+  }));
+
+  it ('Conseguir los comentarios de la entrada', async(() => {
+    const service: FileService = TestBed.get(FileService);
+    service.getComentarios('69').subscribe(resp => {
+      expect(resp).toBeDefined();
+    });
+  }));
+
 });
