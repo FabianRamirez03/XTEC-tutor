@@ -9,17 +9,17 @@
           <div class="card-body">
             <div class="form-check">
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                <label class="form-check-label" for="inlineRadio1">relevancia</label>
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" checked="checked" value="{{false}}">
+                <label class="form-check-label" for="inlineRadio1">Relevancia</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                <label class="form-check-label" for="inlineRadio2">ultima modificacion</label>
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="{{true}}">
+                <label class="form-check-label" for="inlineRadio2">Última Modificación</label>
               </div>
             </div>
             <label for="SelectCarrera" class="form-font">Carrera</label>
             <div class="input-group mb-3">
-              <select class="form-control" id="SelectCarrera" (change)="getCursos(1)">
+              <select class="form-control" id="SelectCarrera" (change)="getCursos(1)" (click)="getCarreras()">
                 <option *ngFor="let carr of listaCarreras">{{ carr.carrera }}</option>
               </select><div class="input-group-append">
             </div>
@@ -44,7 +44,7 @@
             <div class="row">
               <div class="col-sm-3"></div>
               <div class="col-sm-9 text-secondary">
-                <input type="button" class="btn btn-danger" value="Buscar" (click)="buscarPerfil()">
+                <input type="button" class="btn btn-danger" value="Buscar" (click)="getEntradas()">
               </div>
             </div>
           </div>
@@ -63,11 +63,14 @@
                   <th scope="col">Título</th>
                   <th scope="col">Vistas</th>
                   <th scope="col">Puntuación</th>
+                  <th scope="col">Autor</th>
                   <th scope="col">Descripción</th>
-                  <th scope="col">Visible</th>
                   <th scope="col">Carrera</th>
                   <th scope="col">Curso</th>
                   <th scope="col">Tema</th>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Comentarios</th>
+                  <th scope="col">Relevancia</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -75,11 +78,14 @@
                   <th scope="row"><a routerLink="/entrada/{{entrada.idEntrada}}">{{entrada.titulo}}</a></th>
                   <td>{{entrada.vistas}}</td>
                   <td>{{entrada.puntuacion}}</td>
+                  <td>{{entrada.primerNombre}} {{entrada.apellido}}</td>
                   <td>{{entrada.descripcion}}</td>
-                  <td>{{entrada.visible}}</td>
                   <td>{{entrada.carrera}}</td>
                   <td>{{entrada.curso}}</td>
                   <td>{{entrada.tema}}</td>
+                  <td>{{formatoFecha(entrada.fechaCreacion)}}</td>
+                  <td>{{entrada.cantComentarios}}</td>
+                  <td>{{entrada.relevancia}}</td>
                 </tr>
                 </tbody>
               </table>

@@ -7,8 +7,8 @@ import {HttpClient, HttpResponse} from "@angular/common/http";
 export class FileService {
   usuario: any = {};
   constructor(private http: HttpClient) { }
-  public  url = "https://xtectutorapi.azurewebsites.net/api";
-  // public  url = "https://localhost:5001/api";
+  // public  url = "https://xtectutorapi.azurewebsites.net/api";
+  public  url = "https://localhost:5001/api";
 
   public upload(formData: FormData, nuevo: boolean) {
     if (nuevo){
@@ -96,6 +96,10 @@ export class FileService {
 
   public getEntradas(){
     return this.http.get(`${this.url}/Entrada/verEntradas?carnet=${this.getUser().carnet}`)
+  }
+
+  public buscarEntradas(json:any){
+    return this.http.post(`${this.url}/Entrada/buscarEntradas`,json);
   }
 
   public obtenerEntrada(id:any){
