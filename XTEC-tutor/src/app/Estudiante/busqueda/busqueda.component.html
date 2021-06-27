@@ -19,7 +19,7 @@
             </div>
             <label for="SelectCarrera" class="form-font">Carrera</label>
             <div class="input-group mb-3">
-              <select class="form-control" id="SelectCarrera" (change)="getCursos(1)" (click)="getCarreras()">
+              <select class="form-control" id="SelectCarrera" (change)="getCursos(1)" (click)="getCursos(1)">
                 <option *ngFor="let carr of listaCarreras">{{ carr.carrera }}</option>
               </select><div class="input-group-append">
             </div>
