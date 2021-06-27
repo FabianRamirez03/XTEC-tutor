@@ -52,7 +52,7 @@ export class MiPerfilComponent implements OnInit {
   }
 
   getEntradas(){
-    this.fileService.getEntradas().subscribe((res:any) => {this.listaEntradas = res});
+    this.fileService.getEntradas().subscribe((res:any) => {this.listaEntradas = res; console.log(res)});
   }
 
   // @ts-ignore

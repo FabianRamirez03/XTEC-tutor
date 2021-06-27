@@ -9,12 +9,22 @@ export class FileService {
   constructor(private http: HttpClient) { }
   public  url = "https://xtectutorapi.azurewebsites.net/api";
   // public  url = "https://localhost:5001/api";
-  public upload(formData: FormData) {
-    return this.http.post(`${this.url}/file/upload`, formData, {
-      reportProgress: true,
-      observe: 'events',
-    });
+
+  public upload(formData: FormData, nuevo: boolean) {
+    if (nuevo){
+      return this.http.post(`${this.url}/file/upload`, formData, {
+        reportProgress: true,
+        observe: 'events',
+      });
+    }
+    else{
+      return this.http.post(`${this.url}/file/editarEntrada`, formData, {
+        reportProgress: true,
+        observe: 'events',
+      });
+    }
   }
+
   public download(idFile: number) {
     return this.http.get(`${this.url}/file/download?idFile=${idFile}`, {
       reportProgress: true,
@@ -114,6 +124,10 @@ export class FileService {
 
   public getComentarios(id:string){
     return this.http.get<any>(`${this.url}/Review/getReviews?idEntrada=${id}`)
+  }
+
+  public agregarVista(id:string){
+    return this.http.get<any>(`${this.url}/Entrada/agregarVista?idEntrada=${id}`).subscribe(_=>{})
   }
 
 

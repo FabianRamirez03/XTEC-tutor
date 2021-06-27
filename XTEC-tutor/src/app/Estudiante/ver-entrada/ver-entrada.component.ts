@@ -19,8 +19,9 @@ export class VerEntradaComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params.id;
-    this.obtenerEntrada()
-    this.getComentarios()
+    this.obtenerEntrada();
+    this.getComentarios();
+    this.fileService.agregarVista(this.id);
   }
   obtenerEntrada(){
     this.fileService.obtenerEntrada(this.id).subscribe((resp:any)=>{this.entrada = resp; console.log(resp)})
@@ -56,8 +57,8 @@ export class VerEntradaComponent implements OnInit {
   }
 
   comentarEntrada(){
-    const comentario = (document.getElementById('comentario') as HTMLInputElement).value
-    const nota = (document.getElementById('nota') as HTMLInputElement).value
+    const comentario = (document.getElementById('comentario') as HTMLInputElement).value;
+    const nota = (document.getElementById('nota') as HTMLInputElement).value;
     if (nota != ""){
       this.fileService.comentarEntrada(comentario, nota, this.id);
       console.log(comentario);

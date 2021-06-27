@@ -15,7 +15,7 @@ const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full' },
   {path: 'admin', component: MainComponent},
   {path: 'inicio', component: DashBoardComponent},
-  {path: 'crearEntrada', component: CrearEntradaComponent},
+  {path: 'crearEntrada/:id', component: CrearEntradaComponent},
   {path: 'perfil', component: MiPerfilComponent},
   {path: 'entrada/:id', component: VerEntradaComponent},
   {path: 'busqueda', component: BusquedaComponent},

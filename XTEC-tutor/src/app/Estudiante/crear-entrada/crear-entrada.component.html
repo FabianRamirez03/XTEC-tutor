@@ -4,7 +4,7 @@
     <h1>Crear Artículo</h1>'
     <label for="SelectCarrera" class="form-font">Carrera</label>
     <div class="input-group mb-3">
-      <select class="form-control" id="SelectCarrera" (change)="getCursos(1)">
+      <select class="form-control" id="SelectCarrera" (change)="getCursos(1)" (click)="getCursos(1)">
         <option *ngFor="let carr of listaCarreras">{{ carr.carrera }}</option>
       </select><div class="input-group-append">
     </div>
@@ -28,13 +28,13 @@
     </div>
 
   </form>
-  <input type="text" class="form-control" id="titulo" aria-describedby="emailHelp" placeholder="Título" style="margin-top:25px;">
-  <input type="text" class="form-control" id="descripcion" aria-describedby="emailHelp" placeholder="Descripción">
+  <label for="titulo"></label><input type="text" class="form-control" id="titulo" aria-describedby="emailHelp" placeholder="{{entradaAnterior.titulo}}" style="margin-top:25px;">
+  <label for="descripcion"></label><input type="text" class="form-control" id="descripcion" aria-describedby="emailHelp" placeholder="{{entradaAnterior.descripcion}}">
   <form [formGroup]="entrada" (ngSubmit)="submit()">
     <editor
       apiKey="b7lxug636gyeerlit3h7jrrl1la1fc7airfeak0o32ut6x3a"
       id="editorId"
-      initialValue="<p>Inicio del Artículo</p>"
+      initialValue="{{entradaAnterior.cuerpoArticulo}}"
       formControlName="message"
       [init]="{
     height: 500,
@@ -70,7 +70,8 @@
       </div>
     </div>
     <div class="column">
-      <input type="button" class="btn btn-danger" value="Publicar Entrada" (click)="uploadFile()" style="float: right;">
+      <input *ngIf="nuevo"  type="button" class="btn btn-danger" value="Publicar Entrada" (click)="uploadFile()" style="float: right;">
+      <input *ngIf="!nuevo"  type="button" class="btn btn-danger" value="Modificar Entrada" (click)="uploadFile()" style="float: right;">
     </div>
   </div>
 </div>

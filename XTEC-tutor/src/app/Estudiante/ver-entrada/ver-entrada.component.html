@@ -35,7 +35,7 @@
         <button type="button" class="btn btn-outline-danger" (click)="download()">Descargar archivo adjunto</button>
       </div>
       <div *ngIf="entrada.carnet===fileService.getUser().carnet" style="margin-top: 10px">
-        <button type="button" class="btn btn-outline-info" style="margin-bottom: 10px">Modificar</button>
+        <button type="button" routerLink="/crearEntrada/{{entrada.idEntrada}}" class="btn btn-outline-info" style="margin-bottom: 10px">Modificar Entrada</button>
       </div>
 
     </div>

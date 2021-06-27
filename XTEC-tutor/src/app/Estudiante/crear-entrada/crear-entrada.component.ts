@@ -3,6 +3,7 @@ import { EditorModule } from '@tinymce/tinymce-angular';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms'
 import {HttpEventType} from "@angular/common/http";
 import {FileService} from "../../_service/file.service";
+import {ActivatedRoute} from "@angular/router";
 @Component({
   selector: 'app-crear-entrada',
   templateUrl: './crear-entrada.component.html',
@@ -19,26 +20,46 @@ export class CrearEntradaComponent implements OnInit {
   public progress: number = 0;
   @Output() public onUploadFinished = new EventEmitter();
   public file:any;
+  public idEntrada:any;
+  public nuevo = true;
   listaCarreras=[{carrera: 'Seleccione Carrera'}];
   listaCursos=[{curso: 'Seleccione Cursos'}];
   listaTemas=[{tema: 'Seleccione Temas'}];
+  entradaAnterior={cuerpoArticulo: "Entrada nueva", descripcion: "Descripción", titulo: "Título"};
 
-  constructor(private fb: FormBuilder, private fileService: FileService) { }
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private fileService: FileService) { }
   ngOnInit(): void {
-    this.setupForm();
     this.getCarreras();
+    this.idEntrada = this.route.snapshot.params.id;
+    if (this.idEntrada != 0){
+      this.nuevo = false;
+      this.obtenerEntrada();
+      this.articulo.message = this.entradaAnterior.cuerpoArticulo;
+    }
+    this.setupForm();
   }
   setupForm() {
-    this.entrada = this.fb.group({
-      Titulo: [""],
-      message: [this.articulo.message]
-    });
+    if(this.nuevo){
+      this.entrada = this.fb.group({
+        Titulo: [""],
+        message: [this.articulo.message]
+      });
+    }
+    else{
+      this.entrada = this.fb.group({
+        Titulo: [""],
+        message: [this.entradaAnterior.cuerpoArticulo]
+      });
+    }
+
   }
 
   submit(){
     console.log(this.entrada.value.message);
   }
-
+  obtenerEntrada(){
+    this.fileService.obtenerEntrada(this.idEntrada).subscribe((resp:any)=>{this.entradaAnterior = resp; console.log(resp)})
+  }
   public subirArchivo(files:any){
     if (files.length === 0){
       return;
@@ -50,12 +71,21 @@ export class CrearEntradaComponent implements OnInit {
 
   public uploadFile(){
     const formData = new FormData();
-    formData.append('cuerpoArticulo', this.entrada.value.message);
-    formData.append('titulo', (document.getElementById('titulo') as HTMLInputElement).value);
-    formData.append('descripcion', (document.getElementById('descripcion') as HTMLInputElement).value);
+    let descripcion = (document.getElementById('descripcion') as HTMLInputElement).value;
+    let titulo = (document.getElementById('titulo') as HTMLInputElement).value;
+    let cuerpo = this.entrada.value.message
+    descripcion = (descripcion != "") ? descripcion : this.entradaAnterior.descripcion;
+    titulo = (titulo != "") ? titulo : this.entradaAnterior.titulo;
+    cuerpo = (cuerpo != "Entrada nueva") ? cuerpo : this.entradaAnterior.cuerpoArticulo;
+
+
+    formData.append('cuerpoArticulo',cuerpo);
+    formData.append('titulo', titulo);
+    formData.append('descripcion', descripcion);
     formData.append('carrera', (document.getElementById('SelectCarrera') as HTMLInputElement).value);
     formData.append('curso', (document.getElementById('SelectCurso') as HTMLInputElement).value);
     formData.append('tema', (document.getElementById('ListaTemas') as HTMLInputElement).value);
+    formData.append('idEntrada', this.idEntrada);
     formData.append('carnet', this.fileService.getUser().carnet);
     formData.append('visible', '1');
     console.log(formData);
@@ -65,8 +95,7 @@ export class CrearEntradaComponent implements OnInit {
       console.log(fileToUpload);
       formData.append('file', fileToUpload, fileToUpload.name);
     }
-
-    this.fileService.upload(formData)
+    this.fileService.upload(formData, this.nuevo)
       .subscribe(event => {
         console.log(event);
         if (event.type === HttpEventType.UploadProgress){
