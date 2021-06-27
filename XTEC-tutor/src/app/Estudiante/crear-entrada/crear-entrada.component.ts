@@ -73,7 +73,7 @@ export class CrearEntradaComponent implements OnInit {
     const formData = new FormData();
     let descripcion = (document.getElementById('descripcion') as HTMLInputElement).value;
     let titulo = (document.getElementById('titulo') as HTMLInputElement).value;
-    let cuerpo = this.entrada.value.message
+    let cuerpo = this.entrada.value.message;
     descripcion = (descripcion != "") ? descripcion : this.entradaAnterior.descripcion;
     titulo = (titulo != "") ? titulo : this.entradaAnterior.titulo;
     cuerpo = (cuerpo != "Entrada nueva") ? cuerpo : this.entradaAnterior.cuerpoArticulo;

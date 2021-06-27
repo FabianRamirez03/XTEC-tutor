@@ -98,6 +98,10 @@ export class FileService {
     return this.http.get(`${this.url}/Entrada/verEntradas?carnet=${this.getUser().carnet}`)
   }
 
+  public buscarEntradas(json:any){
+    return this.http.post(`${this.url}/Entrada/buscarEntradas`,json);
+  }
+
   public obtenerEntrada(id:any){
     return this.http.get(`${this.url}/Entrada/obtenerEntrada?idEntrada=${id}`)
   }

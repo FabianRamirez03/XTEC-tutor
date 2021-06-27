@@ -18,7 +18,6 @@ export class BusquedaComponent implements OnInit {
   listaTemas=[{tema: 'Seleccione Temas'}];
 
   ngOnInit(): void {
-    this.getEntradas();
     this.getCarreras();
   }
   transformDate(){
@@ -31,7 +30,12 @@ export class BusquedaComponent implements OnInit {
   }
 
   getEntradas(){
-    this.fileService.getEntradas().subscribe((res:any) => {this.listaEntradas = res});
+    let carrera = (document.getElementById('SelectCarrera') as HTMLInputElement).value;
+    let curso = (document.getElementById('SelectCurso') as HTMLInputElement).value;
+    let tema = (document.getElementById('ListaTemas') as HTMLInputElement).value;
+    let tipo = (document.getElementById('inlineRadio2') as HTMLInputElement).checked;
+    let json = {carrera: carrera, curso: curso, tema:tema, tipo: tipo};
+    this.fileService.buscarEntradas(json).subscribe((res:any) => {this.listaEntradas = res; console.log(res)});
   }
   getCarreras(){
     this.fileService.getCarreras().subscribe((resp:any) => {this.listaCarreras = resp; this.getCursos(1)})
@@ -47,14 +51,18 @@ export class BusquedaComponent implements OnInit {
       id = "SelectCarreraModalTema"
     }
     this.fileService.getCursos((document.getElementById(id) as HTMLInputElement).value).
-    subscribe((resp:any) => {this.listaCursos = resp})
+    subscribe((resp:any) => { this.listaCursos = resp; this.listaCursos.push({curso: ""}); this.listaCursos.reverse()})
   }
 
   getTemas(){
     var tema =  (document.getElementById('SelectCurso') as HTMLInputElement).value;
     if (tema == null){tema = "nulo"}
     this.fileService.getTemas(tema).
-    subscribe((resp:any) => {this.listaTemas = resp})
+    subscribe((resp:any) => {this.listaTemas = resp ; this.listaTemas.push({tema: ""}); this.listaTemas.reverse()})
+  }
+
+  formatoFecha(fecha:any){
+    return this.datepipe.transform(fecha, 'dd/MM/yyyy');
   }
 
 }
