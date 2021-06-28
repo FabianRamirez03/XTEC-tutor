@@ -1,25 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, inject, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
+import {FileService} from "../../_service/file.service";
 
 import { StudentNavBarComponent } from './student-nav-bar.component';
 
 describe('StudentNavBarComponent', () => {
-  let component: StudentNavBarComponent;
-  let fixture: ComponentFixture<StudentNavBarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StudentNavBarComponent ]
+      imports: [HttpClientModule ],
+      providers: [FileService]
     })
     .compileComponents();
   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(StudentNavBarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  it('Servicio creado', inject([FileService], (service: FileService) => {
+    expect(service).toBeTruthy();
+  }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 });

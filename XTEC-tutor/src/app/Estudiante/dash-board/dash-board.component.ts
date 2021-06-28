@@ -13,9 +13,7 @@ export class DashBoardComponent implements OnInit {
   ngOnInit(): void {
 
   }
-  public getNombre(){
-    alert(this.fileService.getUser().primerNombre);
-  }
+
 
 
 }

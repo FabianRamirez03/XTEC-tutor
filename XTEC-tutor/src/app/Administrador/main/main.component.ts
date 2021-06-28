@@ -64,9 +64,7 @@ export class MainComponent implements OnInit {
     const tema = (document.getElementById('nuevoTema') as HTMLInputElement).value;
     this.fileService.crearCatalogo(carrera,curso,tema);
   }
-  alerta(){
-    alert("Entra");
-  }
+
 
 
 

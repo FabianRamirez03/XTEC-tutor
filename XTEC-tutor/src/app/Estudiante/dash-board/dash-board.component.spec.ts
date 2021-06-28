@@ -1,25 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { async, inject, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
 import { DashBoardComponent } from './dash-board.component';
+import {FileService} from "../../_service/file.service";
 
 describe('DashBoardComponent', () => {
-  let component: DashBoardComponent;
-  let fixture: ComponentFixture<DashBoardComponent>;
+
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DashBoardComponent ]
+      imports: [HttpClientModule ],
+      providers: [FileService]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DashBoardComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  it('Servicio creado', inject([FileService], (service: FileService) => {
+    expect(service).toBeTruthy();
+  }));
 });

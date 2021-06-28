@@ -19,7 +19,7 @@ describe('AdminNavBarComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('Elemento creado', () => {
     expect(component).toBeTruthy();
   });
 });
