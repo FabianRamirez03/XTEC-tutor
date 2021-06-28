@@ -1,0 +1,369 @@
+{
+	"info": {
+		"_postman_id": "335e2fbe-d9ac-45c0-b9b2-539360cdc63c",
+		"name": "Xtec Tutor API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Catalogos",
+			"item": [
+				{
+					"name": "getCarreras",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.withBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://xtectutorapi.azurewebsites.net/api/Catalogos/getCarreras",
+							"protocol": "https",
+							"host": [
+								"xtectutorapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"Catalogos",
+								"getCarreras"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getCursos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.withBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://xtectutorapi.azurewebsites.net/api/Catalogos/getCursos?Carrera=Escuela de Matemática ",
+							"protocol": "https",
+							"host": [
+								"xtectutorapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"Catalogos",
+								"getCursos"
+							],
+							"query": [
+								{
+									"key": "Carrera",
+									"value": "Escuela de Matemática "
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTemas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.withBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://xtectutorapi.azurewebsites.net/api/Catalogos/getTemas?Curso=Matemática General",
+							"protocol": "https",
+							"host": [
+								"xtectutorapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"Catalogos",
+								"getTemas"
+							],
+							"query": [
+								{
+									"key": "Curso",
+									"value": "Matemática General"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Entradas de Conocimiento",
+			"item": [
+				{
+					"name": "verEntradas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.withBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://xtectutorapi.azurewebsites.net/api/Entrada/verEntradas?carnet=2018099304",
+							"protocol": "https",
+							"host": [
+								"xtectutorapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"Entrada",
+								"verEntradas"
+							],
+							"query": [
+								{
+									"key": "carnet",
+									"value": "2018099304"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtenerEntrada",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.have.jsonBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://xtectutorapi.azurewebsites.net/api/Entrada/obtenerEntrada?idEntrada=99",
+							"protocol": "https",
+							"host": [
+								"xtectutorapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"Entrada",
+								"obtenerEntrada"
+							],
+							"query": [
+								{
+									"key": "idEntrada",
+									"value": "99"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscarEntradas",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.have.jsonBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"carrera\":\"Escuela de Matemática\",\r\n    \"curso\":\"\",\r\n    \"tema\":\"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://xtectutorapi.azurewebsites.net/api/Entrada/buscarEntradas",
+							"protocol": "https",
+							"host": [
+								"xtectutorapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"Entrada",
+								"buscarEntradas"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "verReviews",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.have.jsonBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://xtectutorapi.azurewebsites.net/api/Review/getReviews?idEntrada=99",
+							"protocol": "https",
+							"host": [
+								"xtectutorapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"Review",
+								"getReviews"
+							],
+							"query": [
+								{
+									"key": "idEntrada",
+									"value": "99"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status\", function(){\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.withBody;\r",
+									"    pm.response.to.have.jsonBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"carnet\":\"2018099304\",\r\n    \"password\":\"w\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://xtectutorapi.azurewebsites.net/api/Users/login",
+							"protocol": "https",
+							"host": [
+								"xtectutorapi",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"Users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

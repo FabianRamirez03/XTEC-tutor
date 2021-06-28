@@ -640,3 +640,13 @@ C:\Users\wajib\OneDrive - Estudiantes ITCR\Documentos\TEC\2021 I Semestre\Especi
 C:\Users\wajib\OneDrive - Estudiantes ITCR\Documentos\TEC\2021 I Semestre\Especificación y Diseño\Proyecto\Progra\XTEC-tutor\XtecTutor API\obj\Debug\net461\XtecTutorAPI.csproj.CopyComplete
 C:\Users\wajib\OneDrive - Estudiantes ITCR\Documentos\TEC\2021 I Semestre\Especificación y Diseño\Proyecto\Progra\XTEC-tutor\XtecTutor API\obj\Debug\net461\XtecTutorAPI.exe
 C:\Users\wajib\OneDrive - Estudiantes ITCR\Documentos\TEC\2021 I Semestre\Especificación y Diseño\Proyecto\Progra\XTEC-tutor\XtecTutor API\obj\Debug\net461\XtecTutorAPI.pdb
+C:\Users\wajib\OneDrive - Estudiantes ITCR\Documentos\TEC\2021 I Semestre\Especificación y Diseño\Proyecto\Progra\XTEC-tutor\XtecTutor API\bin\Debug\net461\Autofac.dll
+C:\Users\wajib\OneDrive - Estudiantes ITCR\Documentos\TEC\2021 I Semestre\Especificación y Diseño\Proyecto\Progra\XTEC-tutor\XtecTutor API\bin\Debug\net461\System.Reflection.TypeExtensions.dll
+C:\Users\wajib\OneDrive - Estudiantes ITCR\Documentos\TEC\2021 I Semestre\Especificación y Diseño\Proyecto\Progra\XTEC-tutor\XtecTutor API\bin\Debug\net461\Tweetinvi.Controllers.dll
+C:\Users\wajib\OneDrive - Estudiantes ITCR\Documentos\TEC\2021 I Semestre\Especificación y Diseño\Proyecto\Progra\XTEC-tutor\XtecTutor API\bin\Debug\net461\Tweetinvi.Core.dll
+C:\Users\wajib\OneDrive - Estudiantes ITCR\Documentos\TEC\2021 I Semestre\Especificación y Diseño\Proyecto\Progra\XTEC-tutor\XtecTutor API\bin\Debug\net461\Tweetinvi.Credentials.dll
+C:\Users\wajib\OneDrive - Estudiantes ITCR\Documentos\TEC\2021 I Semestre\Especificación y Diseño\Proyecto\Progra\XTEC-tutor\XtecTutor API\bin\Debug\net461\Tweetinvi.Logic.dll
+C:\Users\wajib\OneDrive - Estudiantes ITCR\Documentos\TEC\2021 I Semestre\Especificación y Diseño\Proyecto\Progra\XTEC-tutor\XtecTutor API\bin\Debug\net461\Tweetinvi.Security.dll
+C:\Users\wajib\OneDrive - Estudiantes ITCR\Documentos\TEC\2021 I Semestre\Especificación y Diseño\Proyecto\Progra\XTEC-tutor\XtecTutor API\bin\Debug\net461\Tweetinvi.Streams.dll
+C:\Users\wajib\OneDrive - Estudiantes ITCR\Documentos\TEC\2021 I Semestre\Especificación y Diseño\Proyecto\Progra\XTEC-tutor\XtecTutor API\bin\Debug\net461\Tweetinvi.WebLogic.dll
+C:\Users\wajib\OneDrive - Estudiantes ITCR\Documentos\TEC\2021 I Semestre\Especificación y Diseño\Proyecto\Progra\XTEC-tutor\XtecTutor API\bin\Debug\net461\Tweetinvi.dll

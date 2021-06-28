@@ -26,5 +26,8 @@ namespace XtecTutorAPI.Models
         public int idCatalogo { get; set; }
         public Boolean visible { get; set; }
         public Boolean existeArchivo { get; set; }
+        public int relevancia { get; set; }
+        public int cantComentarios { get; set; }
+        public Boolean tipo { get; set; }
     }
 }

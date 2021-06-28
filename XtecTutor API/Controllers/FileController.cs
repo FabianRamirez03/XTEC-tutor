@@ -9,7 +9,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
+using Tweetinvi;
 using XtecTutor_API;
+using XtecTutorAPI.Models;
 
 namespace XtecTutorAPI.Controllers
 {
@@ -63,23 +65,34 @@ namespace XtecTutorAPI.Controllers
                         cmd.Parameters.AddWithValue("@nombreArchivo", fileName);
                         cmd.Parameters.AddWithValue("@extension", ".pdf");
                         cmd.Parameters.AddWithValue("@archivo", base64File);
-                        cmd.ExecuteNonQuery();
-                        conn.Close();
-
-                        return Ok(new { dbPath });
                     }
 
                 }
-            catch (Exception ex)
+                    catch (Exception ex)
             {
                     cmd.Parameters.AddWithValue("@nombreArchivo", "");
                     cmd.Parameters.AddWithValue("@extension", "");
                     cmd.Parameters.AddWithValue("@archivo", "");
-                    cmd.ExecuteNonQuery();
-                    conn.Close();
-                    return Ok();
+
                 }
+                cmd.ExecuteNonQuery();
+                var n = "";
+                conn.Close();
+
+                SqlConnection conn2 = new SqlConnection(serverKey);
+                conn2.Open();
+                string insertQuery2 = "obtenerUltimaEntrada";
+                SqlCommand cmd2 = new SqlCommand(insertQuery2, conn2);
+
+                cmd2.CommandType = System.Data.CommandType.StoredProcedure;
+                n = cmd2.ExecuteScalar().ToString();
+
+                Twitter.twittear("Se ha generado la entrada: '" + dict["titulo"] + "' en el catálogo: " + dict["carrera"] + ", " + dict["curso"] + ", " + dict["tema"] + " http://localhost:4200/entrada/" + n.ToString());
+                return Ok();
+
+
             }
+
             catch (Exception ex)
             {
            return StatusCode(500, $"Internal server error: {ex}");}
@@ -182,33 +195,6 @@ namespace XtecTutorAPI.Controllers
             return File(stream, "application/octet-stream", nombreArchivo);
         }
 
-        [HttpGet, DisableRequestSizeLimit]
-        [Route("download2")]
-        public async Task<IActionResult> Download2([FromQuery] string fileUrl)
-        {
-            var filePath = Path.Combine(Directory.GetCurrentDirectory(), fileUrl);
-            if (!System.IO.File.Exists(filePath))
-                return NotFound();
-            var memory = new MemoryStream();
-            using (var stream = new FileStream(filePath, FileMode.Open))
-            {
-                await stream.CopyToAsync(memory);
-            }
-            memory.Position = 0;
-            return File(memory, GetContentType(filePath), filePath);
-        }
-        private string GetContentType(string path)
-        {
-            var provider = new FileExtensionContentTypeProvider();
-            string contentType;
-
-            if (!provider.TryGetContentType(path, out contentType))
-            {
-                contentType = "application/octet-stream";
-            }
-
-            return contentType;
-        }
 
         [HttpGet, DisableRequestSizeLimit]
         [Route("getPhotos")]

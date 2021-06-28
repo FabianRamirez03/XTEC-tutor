@@ -75,8 +75,47 @@ namespace XtecTutorAPI.Controllers
                 entrada.carnet = dr[10].ToString();
                 entrada.primerNombre = dr[11].ToString();
                 entrada.apellido = dr[12].ToString();
+
             }
             return entrada;
+        }
+
+        [HttpPost]
+        [Route("buscarEntradas")]
+        public List<Entrada> buscarEntradas(Entrada entrada)
+        {
+            List<Entrada> entradas = new List<Entrada>();
+            SqlConnection conn = new SqlConnection(serverKey);
+            conn.Open();
+            SqlCommand cmd;
+            string insertQuery = "buscarEntradas";
+            cmd = new SqlCommand(insertQuery, conn);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@carrera", entrada.carrera);
+            cmd.Parameters.AddWithValue("@curso", entrada.curso);
+            cmd.Parameters.AddWithValue("@tema", entrada.tema);
+            cmd.Parameters.AddWithValue("@tipoBusqueda", entrada.tipo);
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                var entry = new Entrada();
+                entry.titulo = dr[0].ToString();
+                entry.descripcion = dr[1].ToString();
+                entry.vistas = (int)dr[2];
+                entry.cantComentarios = (int)dr[3];
+                entry.puntuacion = (decimal)dr[4];
+                entry.fechaCreacion = (DateTime)dr[5];
+                entry.idEntrada = (int)dr[6];
+                entry.relevancia = (int)dr[7];
+                entry.primerNombre = dr[8].ToString();
+                entry.apellido = dr[9].ToString();
+                entry.carrera = dr[10].ToString();
+                entry.curso = dr[11].ToString();
+                entry.tema = dr[12].ToString();
+                entradas.Add(entry);
+
+            }
+            return entradas;
         }
 
         [HttpGet]
