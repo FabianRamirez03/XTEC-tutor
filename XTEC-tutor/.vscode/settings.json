@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/c1b4f40b-f833-4b74-ac49-2114a021ee06/resourceGroups/XTEC_tutor/providers/Microsoft.Web/sites/XxTecTutor",
+    "appService.deploySubpath": "dist\\XTEC-tutor"
+}
