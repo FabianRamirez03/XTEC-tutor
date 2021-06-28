@@ -126,3 +126,5 @@ foreign key (usuarioAdmin) references Administrador (usuario);
 Alter table Vistas
 Add constraint FK_idEntradaVista
 foreign key (idEntrada) references EntradaConocimiento (idEntrada);
+
+insert into Administrador (usuario,contrasena) values ('admin','admin');
